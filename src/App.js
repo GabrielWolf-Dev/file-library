@@ -1,9 +1,12 @@
 import React from 'react';
+import GlobalStyle from './GlobalStyle';
+import Routes from './routes';
 
 export default function App() {
   return (
-    <div className="App">
-        File Library Project with React Js and Firebase
-    </div>
+    <>
+      <GlobalStyle />
+      <Routes />
+    </>
   );
 }
