@@ -3,7 +3,14 @@ import { Link } from 'react-router-dom';
 import Menu from '@material-ui/icons/Menu';
 
 import LogoIcon from '../../assets/img/file-icon.png';
-import { BgHeader, ButtonMenu, ListMenu, Nav } from './style';
+import {
+    BgHeader,
+    ButtonMenu,
+    ListMenuMobile,
+    NavMobile,
+    NavDesktop,
+    ListMenuDesktop
+} from './style';
 import { ContainerFlexBetween } from '../UI';
 import { white, cianBlue } from '../UI/variables';
 
@@ -35,28 +42,51 @@ export default function Header() {
                     <Menu style={{ fontSize: "32px" }} />
                 </ButtonMenu>
 
-                <Nav style={isOpenMenu ? showMenu : hideMenu}>
+                <NavDesktop>
                     <ul>
-                        <ListMenu>
+                        <ListMenuDesktop>
                             <Link 
                                 style={{ color: pathName === '/' ? cianBlue : white }} 
                                 to="/"
                             >Home Page</Link>
-                        </ListMenu>
-                        <ListMenu>
+                        </ListMenuDesktop>
+                        <ListMenuDesktop>
                             <Link
                                 style={{ color: pathName === '/login' ? cianBlue : white }}
                                 to="/login"
                             >Login</Link>
-                        </ListMenu>
-                        <ListMenu>
+                        </ListMenuDesktop>
+                        <ListMenuDesktop>
                             <Link
                                 style={{ color: pathName === '/register' ? cianBlue : white }}
                                 to="/register"
                             >Registrar-se</Link>
-                        </ListMenu>
+                        </ListMenuDesktop>
                     </ul>
-                </Nav>
+                </NavDesktop>
+
+                <NavMobile style={isOpenMenu ? showMenu : hideMenu}>
+                    <ul>
+                        <ListMenuMobile>
+                            <Link 
+                                style={{ color: pathName === '/' ? cianBlue : white }} 
+                                to="/"
+                            >Home Page</Link>
+                        </ListMenuMobile>
+                        <ListMenuMobile>
+                            <Link
+                                style={{ color: pathName === '/login' ? cianBlue : white }}
+                                to="/login"
+                            >Login</Link>
+                        </ListMenuMobile>
+                        <ListMenuMobile>
+                            <Link
+                                style={{ color: pathName === '/register' ? cianBlue : white }}
+                                to="/register"
+                            >Registrar-se</Link>
+                        </ListMenuMobile>
+                    </ul>
+                </NavMobile>
             </ContainerFlexBetween>
         </BgHeader>
     )

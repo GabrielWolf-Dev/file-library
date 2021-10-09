@@ -1,10 +1,12 @@
 import styled from "styled-components";
 import {
+    black,
     cianBlue,
     orange,
     white
 } from './variables';
 
+/*-- Containers --*/
 export const Container = styled.div`
     width: 100%;
     max-width: 300px;
@@ -12,6 +14,12 @@ export const Container = styled.div`
     margin: auto;
     padding: 0 2%;
     text-align: center;
+
+    @media (min-width: 468px) { max-width: 440px; }
+
+    @media (min-width: 568px) { max-width: 540px; }
+
+    @media (min-width: 768px) { max-width: 1280px; }
 `;
 
 export const ContainerFlexBetween = styled(Container)`
@@ -20,12 +28,7 @@ export const ContainerFlexBetween = styled(Container)`
     align-items: center;
 `;
 
-export const TitleBigger = styled.h1`
-    font-size: 2rem;
-    font-weight: bold;
-    color: ${orange};
-`;
-
+/*-- Btns --*/
 export const Button = styled.button`
     width: 100%;
     max-width: 160px;
@@ -36,4 +39,17 @@ export const Button = styled.button`
     font-size: 1.25rem;
     font-weight: normal;
     margin-top: 24px;
+`;
+
+/*-- Fonts --*/
+export const TitleBigger = styled.h1`
+    font-size: 2rem;
+    font-weight: bold;
+    color: ${orange};
+`;
+
+export const Content = styled.p`
+    font-size: 1.25rem;
+    font-weight: normal;
+    color: ${black};
 `;

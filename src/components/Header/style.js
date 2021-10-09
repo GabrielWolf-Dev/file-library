@@ -13,9 +13,11 @@ const ButtonMenu = styled.button`
     height: 32px;
     background-color: transparent;
     color: ${cianBlue};
+
+    @media (min-width: 768px) { display: none; }
 `;
 
-const Nav = styled.nav`
+const NavMobile = styled.nav`
     width: 100vw;
     position: absolute;
     top: calc(60px);
@@ -25,17 +27,33 @@ const Nav = styled.nav`
     text-align: center;
     background-color: ${blueDark};
     transition: all ease-in .3s;
+
+    @media (min-width: 768px) { display: none; }
 `;
 
-const ListMenu = styled.li`
+const ListMenuMobile = styled.li`
     margin: 16px 0;
     font-size: 1.7rem;
     font-weight: 500;
 `;
 
+const NavDesktop = styled.nav`
+    display: none;
+
+    @media (min-width: 768px) { display: block; }
+`;
+
+const ListMenuDesktop = styled.li`
+    display: inline-block;
+    margin: 0 8px;
+    font-size: 1.25rem;
+`;
+
 export {
     BgHeader,
     ButtonMenu,
-    Nav,
-    ListMenu
+    NavMobile,
+    ListMenuMobile,
+    NavDesktop,
+    ListMenuDesktop
 };
