@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import {
-    black,
     cianBlue,
     orange,
     white
@@ -51,5 +50,14 @@ export const TitleBigger = styled.h1`
 export const Content = styled.p`
     font-size: 1.25rem;
     font-weight: normal;
-    color: ${black};
+`;
+
+/*-- Others --*/
+
+export const LineMobile = styled.hr`
+    width: 80%;
+    margin: 24px auto;
+    border: solid 1px ${orange};
+
+    @media (min-width: 768px) { display: none; }
 `;
