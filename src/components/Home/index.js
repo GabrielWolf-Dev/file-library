@@ -2,14 +2,6 @@ import React from 'react';
 import Slider from "react-slick";
 import { Player } from '@lottiefiles/react-lottie-player';
 
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-
-import Header from '../Header';
-import cloudFile from '../../assets/svg/cloud-files.svg';
-import secureFile from '../../assets/svg/secure-files.svg';
-import registerLoginAcccount from '../../assets/svg/register-account.svg';
-
 import {
     Container,
     LineMobile,
@@ -24,9 +16,17 @@ import {
     ImgSectionDesktop,
     BtnDesktop,
     BgAlternativeSections,
-    SlideWrapper
+    AnimationContainer
 } from './style';
 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import cloudFile from '../../assets/svg/cloud-files.svg';
+import secureFile from '../../assets/svg/secure-files.svg';
+import registerLoginAcccount from '../../assets/svg/register-account.svg';
+
+import Header from '../Header';
+import Footer from '../Footer';
 
 export default function Home(){
     const settings = {
@@ -61,7 +61,7 @@ export default function Home(){
                 <Container style={{ margin: '48px auto' }}>
                     <TitleBigger>Prezamos pela simplicidade!</TitleBigger>
                     <Slider {...settings} style={{ padding: '24px 0' }}>
-                        <SlideWrapper>
+                        <AnimationContainer>
                             <Player
                                 autoplay
                                 loop
@@ -70,9 +70,9 @@ export default function Home(){
                           />
 
                           <SubTitle>Logou</SubTitle>
-                        </SlideWrapper>
+                        </AnimationContainer>
 
-                        <SlideWrapper>
+                        <AnimationContainer>
                             <Player
                                 autoplay
                                 loop
@@ -82,9 +82,9 @@ export default function Home(){
                             />
 
                             <SubTitle>Acessou</SubTitle>
-                        </SlideWrapper>
+                        </AnimationContainer>
                         
-                        <SlideWrapper>
+                        <AnimationContainer>
                             <Player
                                 autoplay
                                 loop
@@ -93,7 +93,7 @@ export default function Home(){
                             />
 
                             <SubTitle>Armazenou!</SubTitle>
-                        </SlideWrapper>
+                        </AnimationContainer>
                     </Slider>
                 </Container>
             <LineMobile />
@@ -108,6 +108,17 @@ export default function Home(){
                     <ImgSectionDesktop src={registerLoginAcccount} alt="Tela de fazer registro/login da plataforma" />
                 </ContainerSection>
             </BgAlternativeSections>
+            <Container style={{ margin: '48px auto' }}>
+                <AnimationContainer>
+                    <Player
+                        autoplay
+                        loop
+                        style={{ height: '300px', width: '300px' }}
+                        src="https://assets9.lottiefiles.com/private_files/lf30_ig1wfilw.json"
+                    />
+                </AnimationContainer>
+            </Container>
+            <Footer />
         </>
     );
 }

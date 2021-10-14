@@ -3,7 +3,7 @@ import {
     cianBlue,
     orange,
     white
-} from './variables';
+} from './colors';
 
 /*-- Containers --*/
 export const Container = styled.div`

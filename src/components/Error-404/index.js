@@ -11,7 +11,7 @@ import {
     TitleBigger,
     Button
 } from '../UI';
-import { white } from '../UI/variables';
+import { white } from '../UI/colors';
 
 export default function Error404() {
     return (

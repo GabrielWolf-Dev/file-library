@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { white, blueDark, cianBlue } from '../UI/variables';
+import { white, blueDark, cianBlue } from '../UI/colors';
 
 const BgHeader = styled.header`
     width: 100%;

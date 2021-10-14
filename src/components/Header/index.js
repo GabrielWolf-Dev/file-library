@@ -12,7 +12,7 @@ import {
     ListMenuDesktop
 } from './style';
 import { ContainerFlexBetween } from '../UI';
-import { white, cianBlue } from '../UI/variables';
+import { white, cianBlue } from '../UI/colors';
 
 export default function Header() {
     const [isOpenMenu, setIsOpenMenu] = useState(false);

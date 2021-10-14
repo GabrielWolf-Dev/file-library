@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import { ContainerFlexBetween, Content, Button } from '../UI';
-import { blueDark, white } from "../UI/variables";
+import { blueDark, white } from "../UI/colors";
 
 export const ContainerSection = styled(ContainerFlexBetween)`
     flex-direction: column;
@@ -58,9 +58,10 @@ export const ImgSectionDesktop = styled(ImgSection)`
     @media (min-width: 768px) { display: block; }
 `;
 
-export const SlideWrapper = styled.aside`
+export const AnimationContainer = styled.aside`
     width: 80%;
     height: 300px;
+    margin: auto;
     text-align: center;
 
     @media (min-width: 368px) {
