@@ -47,6 +47,12 @@ export const TitleBigger = styled.h1`
     color: ${orange};
 `;
 
+export const SubTitle = styled.h2`
+    font-size: 1.7rem;
+    font-weight: bold;
+    color: ${orange};
+`;
+
 export const Content = styled.p`
     font-size: 1.25rem;
     font-weight: normal;

@@ -1,11 +1,16 @@
 import React from 'react';
-import Header from '../Header';
+import Slider from "react-slick";
 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+import Header from '../Header';
 import cloudFile from '../../assets/svg/cloud-files.svg';
 import secureFile from '../../assets/svg/secure-files.svg';
 import registerLoginAcccount from '../../assets/svg/register-account.svg';
 
 import {
+    Container,
     LineMobile,
     TitleBigger,
 } from '../UI';
@@ -21,6 +26,14 @@ import {
 
 
 export default function Home(){
+    const settings = {
+        dots: true,
+        autoplay: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1
+    };
+
     return(
         <>
             <Header />
@@ -42,7 +55,14 @@ export default function Home(){
                 </ContainerSection>
             </BgAlternativeSections>
             <LineMobile />
-            // Slider
+                <Container style={{ margin: '48px auto' }}>
+                    <TitleBigger>Prezamos pela simplicidade!</TitleBigger>
+                    <Slider {...settings}>
+                        <div>teste</div>
+                        <div>teste</div>
+                        <div>teste</div>
+                    </Slider>
+                </Container>
             <LineMobile />
             <BgAlternativeSections>
                 <ContainerSection>
