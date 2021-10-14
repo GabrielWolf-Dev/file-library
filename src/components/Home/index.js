@@ -1,5 +1,6 @@
 import React from 'react';
 import Slider from "react-slick";
+import { Player } from '@lottiefiles/react-lottie-player';
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -13,6 +14,7 @@ import {
     Container,
     LineMobile,
     TitleBigger,
+    SubTitle
 } from '../UI';
 import {
     ContainerSection,
@@ -21,7 +23,8 @@ import {
     BtnMobile,
     ImgSectionDesktop,
     BtnDesktop,
-    BgAlternativeSections
+    BgAlternativeSections,
+    SlideWrapper
 } from './style';
 
 
@@ -29,7 +32,7 @@ export default function Home(){
     const settings = {
         dots: true,
         autoplay: true,
-        speed: 500,
+        autoplaySpeed: 3000,
         slidesToShow: 1,
         slidesToScroll: 1
     };
@@ -57,10 +60,40 @@ export default function Home(){
             <LineMobile />
                 <Container style={{ margin: '48px auto' }}>
                     <TitleBigger>Prezamos pela simplicidade!</TitleBigger>
-                    <Slider {...settings}>
-                        <div>teste</div>
-                        <div>teste</div>
-                        <div>teste</div>
+                    <Slider {...settings} style={{ padding: '24px 0' }}>
+                        <SlideWrapper>
+                            <Player
+                                autoplay
+                                loop
+                                style={{ height: '300px', width: '300px' }}
+                                src="https://assets1.lottiefiles.com/packages/lf20_bHVEVT.json"
+                          />
+
+                          <SubTitle>Logou</SubTitle>
+                        </SlideWrapper>
+
+                        <SlideWrapper>
+                            <Player
+                                autoplay
+                                loop
+                                
+                                style={{ height: '300px', width: '300px' }}
+                                src="https://assets6.lottiefiles.com/packages/lf20_jgL75c.json"
+                            />
+
+                            <SubTitle>Acessou</SubTitle>
+                        </SlideWrapper>
+                        
+                        <SlideWrapper>
+                            <Player
+                                autoplay
+                                loop
+                                style={{ height: '300px', width: '300px' }}
+                                src="https://assets5.lottiefiles.com/packages/lf20_GxMZME.json"
+                            />
+
+                            <SubTitle>Armazenou!</SubTitle>
+                        </SlideWrapper>
                     </Slider>
                 </Container>
             <LineMobile />

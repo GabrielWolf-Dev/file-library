@@ -57,3 +57,15 @@ export const ImgSectionDesktop = styled(ImgSection)`
 
     @media (min-width: 768px) { display: block; }
 `;
+
+export const SlideWrapper = styled.aside`
+    width: 80%;
+    height: 300px;
+    text-align: center;
+
+    @media (min-width: 368px) {
+        width: 100%;
+        max-width: 300px;
+    }
+    @media (min-width: 768px) { max-width: 600px; }
+`;
