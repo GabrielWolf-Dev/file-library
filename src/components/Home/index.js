@@ -27,6 +27,7 @@ import registerLoginAcccount from '../../assets/svg/register-account.svg';
 
 import Header from '../Header';
 import Footer from '../Footer';
+import { Link } from 'react-router-dom';
 
 export default function Home(){
     const settings = {
@@ -65,7 +66,7 @@ export default function Home(){
                             <Player
                                 autoplay
                                 loop
-                                style={{ height: '300px', width: '300px' }}
+                                style={{ height: '300px', width: '100%' }}
                                 src="https://assets1.lottiefiles.com/packages/lf20_bHVEVT.json"
                           />
 
@@ -77,7 +78,7 @@ export default function Home(){
                                 autoplay
                                 loop
                                 
-                                style={{ height: '300px', width: '300px' }}
+                                style={{ height: '300px', width: '100%' }}
                                 src="https://assets6.lottiefiles.com/packages/lf20_jgL75c.json"
                             />
 
@@ -88,7 +89,7 @@ export default function Home(){
                             <Player
                                 autoplay
                                 loop
-                                style={{ height: '300px', width: '300px' }}
+                                style={{ height: '300px', width: '100%' }}
                                 src="https://assets5.lottiefiles.com/packages/lf20_GxMZME.json"
                             />
 
@@ -102,7 +103,9 @@ export default function Home(){
                     <div>
                         <TitleBigger>Não criou uma conta?</TitleBigger>
                         <ContentSection>Clique no botão abaixo para ter o seu primeiro acesso com a plataforma :)</ContentSection>
-                        <BtnDesktop>Registrar-se</BtnDesktop>
+                        <Link to="/register">
+                            <BtnDesktop>Registrar-se</BtnDesktop>
+                        </Link>
                     </div>
                     <BtnMobile>Registrar-se</BtnMobile>
                     <ImgSectionDesktop src={registerLoginAcccount} alt="Tela de fazer registro/login da plataforma" />
@@ -113,7 +116,7 @@ export default function Home(){
                     <Player
                         autoplay
                         loop
-                        style={{ height: '300px', width: '300px' }}
+                        style={{ height: '300px', width: '100%' }}
                         src="https://assets9.lottiefiles.com/private_files/lf30_ig1wfilw.json"
                     />
                 </AnimationContainer>

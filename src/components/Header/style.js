@@ -18,7 +18,7 @@ const ButtonMenu = styled.button`
 `;
 
 const NavMobile = styled.nav`
-    width: 100vw;
+    width: 100%;
     position: absolute;
     top: calc(60px);
     left: 0;

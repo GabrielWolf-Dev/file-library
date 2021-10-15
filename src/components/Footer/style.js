@@ -5,7 +5,7 @@ import { blueDark, white, cianBlue } from '../UI/colors';
 export const FooterSection = styled.footer`
     width: 100%;
     min-height: 40px;
-    padding: 16px 2%;
+    padding: 20px 2%;
     background-color: ${blueDark};
 `;
 

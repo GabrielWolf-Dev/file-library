@@ -5,7 +5,7 @@ import { blueDark, white } from "../UI/colors";
 
 export const ContainerSection = styled(ContainerFlexBetween)`
     flex-direction: column;
-    gap: 24px;
+    gap: 16px;
     margin: 48px auto;
 
     @media (min-width: 768px) {
@@ -43,6 +43,8 @@ export const BgAlternativeSections = styled.div`
 `;
 
 export const BtnMobile = styled(Button)`
+    margin-top: 0;
+
     @media (min-width: 768px) { display: none; }
 `;
 
