@@ -98,7 +98,21 @@ export const Input = styled.input`
     font-size: 1rem;
     font-weight: lighter;
     color: ${black};
-    margin: 8px 0;
+`;
+
+export const FieldSet = styled.fieldset`
+    width: 100%;
+    border: none;
+    text-align: left;
+    margin: 16px 0;
+`;
+
+export const Label = styled.label`
+    font-size: 1rem;
+    font-weight: lighter;
+    color: ${black};
+    margin-left: 8px;
+
 `;
 
 /*-- Fonts --*/

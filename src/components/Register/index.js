@@ -4,9 +4,6 @@ import { Player } from '@lottiefiles/react-lottie-player';
 import Header from '../Header';
 import Footer from '../Footer';
 
-import faceIcon from '../../assets/svg/face-icon.svg';
-import googleIcon from '../../assets/svg/google-icon.svg';
-
 import { 
     ContainerAuth,
     ContainerItemsRes,
@@ -17,8 +14,12 @@ import {
     Button,
     BtnAuthSocial,
     IconAuthImg,
-    BoxPlayerAnimation
+    BoxPlayerAnimation,
+    FieldSet,
+    Label
  } from '../UI';
+import faceIcon from '../../assets/svg/face-icon.svg';
+import googleIcon from '../../assets/svg/google-icon.svg';
 
 export default function Register() {
     return (
@@ -27,14 +28,22 @@ export default function Register() {
             <TitleBigger style={{ marginTop: '48px' }}>Register Page!</TitleBigger>
             <ContainerItemsRes>
                 <Form>
-                    <Input 
-                        type="email"
-                        placeholder="E-mail"
-                    />
-                    <Input 
-                        type="password"
-                        placeholder="Senha"
-                    />
+                    <FieldSet>
+                        <Label htmlFor="email">E-mail</Label>
+                        <Input 
+                            type="email"
+                            id="email"
+                            placeholder="E-mail"
+                        />
+                    </FieldSet>
+                    <FieldSet>
+                        <Label htmlFor="pass">Senha</Label>
+                        <Input
+                            id="pass"
+                            type="password"
+                            placeholder="Senha"
+                        />
+                    </FieldSet>
                     <Button type="submit">Registrar</Button>
                 </Form>
                 <BoxPlayerAnimation>
