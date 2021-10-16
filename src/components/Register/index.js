@@ -1,4 +1,5 @@
 import React from 'react';
+import { filterXSS } from 'xss';
 import { Player } from '@lottiefiles/react-lottie-player';
 
 import Header from '../Header';
@@ -22,17 +23,40 @@ import faceIcon from '../../assets/svg/face-icon.svg';
 import googleIcon from '../../assets/svg/google-icon.svg';
 
 export default function Register() {
+    function registerAccount(event){
+        event.preventDefault();
+
+        const datas = new FormData(event.target);
+        const email = filterXSS(datas.get('email'));
+        const pass = filterXSS(datas.get('pass'));
+
+        validationForm(email, pass);
+    }
+
+    function validationForm(email, pass){
+        const regExpEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.?([a-z]+)?$/;
+        const regExpPass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#?!])[0-9a-zA-Z$*&@#?!]{8,}$/;
+
+        if(regExpEmail.test(email) && regExpPass.test(pass)){
+            alert('ok');
+            // Fazer o registro com Firebase e redirecionar para a plataforma
+        } else {
+            alert("E-mail e senha inválidos");
+        }
+    }
+
     return (
         <>
             <Header />
-            <TitleBigger style={{ marginTop: '48px' }}>Register Page!</TitleBigger>
+            <TitleBigger style={{ marginTop: '48px' }}>Registrar-se</TitleBigger>
             <ContainerItemsRes>
-                <Form>
+                <Form onSubmit={registerAccount}>
                     <FieldSet>
                         <Label htmlFor="email">E-mail</Label>
                         <Input 
                             type="email"
                             id="email"
+                            name="email"
                             placeholder="E-mail"
                         />
                     </FieldSet>
@@ -40,6 +64,7 @@ export default function Register() {
                         <Label htmlFor="pass">Senha</Label>
                         <Input
                             id="pass"
+                            name="pass"
                             type="password"
                             placeholder="Senha"
                         />

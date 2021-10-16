@@ -25,7 +25,7 @@ export default function Login() {
     return (
         <>
             <Header />
-            <TitleBigger style={{ marginTop: '48px' }}>Register Page!</TitleBigger>
+            <TitleBigger style={{ marginTop: '48px' }}>Login</TitleBigger>
             <ContainerItemsRes>
                 <Form>
                     <FieldSet>
