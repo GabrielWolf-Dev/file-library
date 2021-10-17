@@ -3,6 +3,7 @@ import { filterXSS } from 'xss';
 import { Player } from '@lottiefiles/react-lottie-player';
 import { useAuth } from '../../hooks/useAuth';
 import { Redirect } from 'react-router-dom';
+import { auth } from '../../firebase';
 
 import Header from '../Header';
 import Footer from '../Footer';
@@ -25,7 +26,7 @@ import faceIcon from '../../assets/svg/face-icon.svg';
 import googleIcon from '../../assets/svg/google-icon.svg';
 
 export default function Register() {
-    const [isAuth, setAuth] = useAuth(); 
+    const [isAuth, setIsAuth] = useAuth();
 
     function registerAccount(event){
         event.preventDefault();
@@ -34,25 +35,44 @@ export default function Register() {
         const email = filterXSS(datas.get('email'));
         const pass = filterXSS(datas.get('pass'));
 
-        validationForm(email, pass);
+        if(validationForm(email, pass)){
+            alert('ok');
+            createAccount(email, pass);
+        } else {
+            setIsAuth({});
+            alert("E-mail e senha inválidos");
+        }  
+    }
+ 
+    function createAccount(email, pass){
+        auth.createUserWithEmailAndPassword(email, pass)
+        .then((user) => {
+            setIsAuth({
+            name: user.displayName,
+            email: user.email,
+            img: user.photoURL,
+            uid: user.uid
+          });
+        })
+        .catch((error) => {
+          console.error(error.code);
+          console.log(error.message);
+          // Printar mensagem de erro
+          alert("Erro ao logar-se");
+        });
     }
 
     function validationForm(email, pass){
         const regExpEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.?([a-z]+)?$/;
         const regExpPass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#?!])[0-9a-zA-Z$*&@#?!]{8,}$/;
 
-        if(regExpEmail.test(email) && regExpPass.test(pass)){
-            alert('ok');
-            setAuth(true); // Inserir o token aqui
-            // Fazer o registro com Firebase e redirecionar para a plataforma
-        } else {
-            setAuth(false);
-            alert("E-mail e senha inválidos");
-        }
+        return regExpEmail.test(email) && regExpPass.test(pass) ? true : false;
     }
 
     return (
-        !isAuth ? (
+        Object.keys(isAuth).length !== 0 ? (
+            <Redirect to={{ pathname: '/dashboard'}} />
+        ) : (
             <>
                 <Header />
                 <TitleBigger style={{ marginTop: '48px' }}>Registrar-se</TitleBigger>
@@ -104,8 +124,6 @@ export default function Register() {
                 </ContainerAuth>
                 <Footer />
             </>
-        ) : (
-            <Redirect to={{ pathname: '/dashboard'}} />
         )
     )
 }
