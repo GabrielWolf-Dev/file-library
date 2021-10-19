@@ -10,7 +10,7 @@ import Footer from '../Footer';
 import {
     TitleBigger,
     SubTitleAuth,
-    ContainerAuth,
+    ContainerForm,
     ContainerItemsRes,
     Form,
     Input,
@@ -69,29 +69,44 @@ export default function Login() {
                     <Header />
                     <TitleBigger style={{ marginTop: '48px' }}>Login</TitleBigger>
                     <ContainerItemsRes>
-                        <Form onSubmit={signIn}>
-                            <FieldSet>
-                                <Label htmlFor="email">E-mail</Label>
-                                <Input
-                                    required
-                                    type="email"
-                                    id="email"
-                                    name="email"
-                                    placeholder="E-mail"
-                                />
-                            </FieldSet>
-                            <FieldSet>
-                                <Label htmlFor="pass">Senha</Label>
-                                <Input
-                                    required
-                                    id="pass"
-                                    type="password"
-                                    name="pass"
-                                    placeholder="Senha"
-                                />
-                            </FieldSet>
-                            <Button type="submit">Logar</Button>
-                        </Form>
+                        <ContainerForm>
+                            <Form onSubmit={signIn}>
+                                <FieldSet>
+                                    <Label htmlFor="email">E-mail</Label>
+                                    <Input
+                                        required
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        placeholder="E-mail"
+                                    />
+                                </FieldSet>
+                                <FieldSet>
+                                    <Label htmlFor="pass">Senha</Label>
+                                    <Input
+                                        required
+                                        id="pass"
+                                        type="password"
+                                        name="pass"
+                                        placeholder="Senha"
+                                    />
+                                </FieldSet>
+                                <Button type="submit">Logar</Button>
+                            </Form>
+                            
+                            <SubTitleAuth>Ou</SubTitleAuth>
+                            <BtnAuthSocial>
+                                <ContentBtnAuth>
+                                    Fazer login com
+
+                                    <IconAuthImg
+                                        src={googleIcon}
+                                        alt="Ícone do Google provida pelo Font Awesome"
+                                    />
+                                </ContentBtnAuth>
+                            </BtnAuthSocial>
+                        </ContainerForm>
+
                         <BoxPlayerAnimation>
                             <img
                                 style={{ width: '100%', height: '280px' }}
@@ -100,19 +115,6 @@ export default function Login() {
                             />
                         </BoxPlayerAnimation>
                     </ContainerItemsRes>
-                    <ContainerAuth>
-                        <SubTitleAuth>Ou</SubTitleAuth>
-                        <BtnAuthSocial>
-                            <ContentBtnAuth>
-                                Fazer login com
-
-                                <IconAuthImg
-                                    src={googleIcon}
-                                    alt="Ícone do Google provida pelo Font Awesome"
-                                />
-                            </ContentBtnAuth>
-                        </BtnAuthSocial>
-                    </ContainerAuth>
                     <Footer />
                 </>
             )

@@ -9,7 +9,7 @@ import Header from '../Header';
 import Footer from '../Footer';
 
 import { 
-    ContainerAuth,
+    ContainerForm,
     ContainerItemsRes,
     TitleBigger,
     SubTitleAuth,
@@ -82,29 +82,44 @@ export default function Register() {
                 <Header />
                 <TitleBigger style={{ marginTop: '48px' }}>Registrar-se</TitleBigger>
                 <ContainerItemsRes>
-                    <Form onSubmit={registerAccount}>
-                        <FieldSet>
-                            <Label htmlFor="email">E-mail</Label>
-                            <Input
-                                required
-                                type="email"
-                                id="email"
-                                name="email"
-                                placeholder="E-mail"
-                            />
-                        </FieldSet>
-                        <FieldSet>
-                            <Label htmlFor="pass">Senha</Label>
-                            <Input
-                                required
-                                id="pass"
-                                name="pass"
-                                type="password"
-                                placeholder="Senha"
-                            />
-                        </FieldSet>
-                        <Button type="submit">Registrar</Button>
-                    </Form>
+                    <ContainerForm>
+                        <Form onSubmit={registerAccount}>
+                            <FieldSet>
+                                <Label htmlFor="email">E-mail</Label>
+                                <Input
+                                    required
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    placeholder="E-mail"
+                                />
+                            </FieldSet>
+                            <FieldSet>
+                                <Label htmlFor="pass">Senha</Label>
+                                <Input
+                                    required
+                                    id="pass"
+                                    name="pass"
+                                    type="password"
+                                    placeholder="Senha"
+                                />
+                            </FieldSet>
+                            <Button type="submit">Registrar</Button>
+                        </Form>
+
+                        <SubTitleAuth>Ou</SubTitleAuth>
+                        <BtnAuthSocial>
+                            <ContentBtnAuth>
+                                Fazer login com
+
+                                <IconAuthImg
+                                    src={googleIcon}
+                                    alt="Ícone do Google provida pelo Font Awesome"
+                                />
+                            </ContentBtnAuth>
+                        </BtnAuthSocial>
+                    </ContainerForm>
+
                     <BoxPlayerAnimation>
                         <Player
                             style={{ width: '100%', height: '280px' }}
@@ -114,19 +129,6 @@ export default function Register() {
                         />
                     </BoxPlayerAnimation>
                 </ContainerItemsRes>
-                <ContainerAuth>
-                    <SubTitleAuth>Ou</SubTitleAuth>
-                    <BtnAuthSocial>
-                        <ContentBtnAuth>
-                            Fazer login com
-
-                            <IconAuthImg
-                                src={googleIcon}
-                                alt="Ícone do Google provida pelo Font Awesome"
-                            />
-                        </ContentBtnAuth>
-                    </BtnAuthSocial>
-                </ContainerAuth>
                 <Footer />
             </>
         )

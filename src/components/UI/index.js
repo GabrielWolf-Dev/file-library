@@ -41,17 +41,14 @@ export const ContainerItemsRes = styled(Container)`
     }
 `;
 
-export const ContainerAuth = styled.aside`
+export const ContainerForm = styled.aside`
     width: 100%;
     max-width: 300px;
-    height: 100%;
     margin: 32px auto 48px auto;
     padding: 0 2%;
     text-align: center;
 
-    @media (min-width: 468px) { max-width: 440px; }
-    @media (min-width: 568px) { max-width: 540px; }
-    @media (min-width: 768px) { max-width: 1280px; }
+    @media (min-width: 768px) { max-width: 400px; }
 `;
 
 /*-- Btns & Forms/Inputs --*/
@@ -68,7 +65,8 @@ export const Button = styled.button`
 `;
 
 export const BtnAuthSocial = styled.button`
-    width: 180px;
+    width: 100%;
+    max-width: 180px;
     height: 32px;
     background-color: ${white};
     font-size: 18px;
@@ -79,7 +77,7 @@ export const BtnAuthSocial = styled.button`
     position: relative;
 
     @media (min-width: 368px) {
-        width: 200px;
+        max-width: 200px;
         height: 42px;
     }
 `;
@@ -142,6 +140,7 @@ export const SubTitle = styled.h2`
 `;
 
 export const SubTitleAuth = styled.h3`
+    margin-top: 32px;
     font-size: 1.7rem;
     font-weight: bold;  
     color: ${black};

@@ -5,20 +5,21 @@ import { FooterSection, Logo } from './style';
 import { ContainerFlexBetween, SubContent } from '../UI';
 
 export default function Footer() {
-    const pathName = document.location.pathname;
     const [footerSectionStyle, setFooterSectionStyle] = useState({});
-    
+    const widthWindow = window.innerWidth;
+    const pathName = document.location.pathname;
+    const isDesktopPageRegLog = widthWindow >= 768 && (pathName == '/register' || pathName == '/login');
+
     useEffect(() => 
-    pathName == '/register' || pathName == '/login'
+        isDesktopPageRegLog
     ? setFooterSectionStyle({
         position: 'absolute',
         bottom: '0'
     })
     : setFooterSectionStyle({
         position: 'initial',
-        bottom: 'initial'
+        bottom: '0'
     }), [pathName]);
-
     return (
         <FooterSection style={{
             position: footerSectionStyle.position,
