@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Menu from '@material-ui/icons/Menu';
+import { useAuth } from '../../hooks/useAuth';
 
 import LogoIcon from '../../assets/img/file-icon.png';
 import {
@@ -16,6 +17,7 @@ import { white, cianBlue } from '../UI/colors';
 
 export default function Header() {
     const [isOpenMenu, setIsOpenMenu] = useState(false);
+    const [isAuth] =  useAuth();
     const pathName = window.location.pathname;
 
     const showMenu = {
@@ -43,49 +45,99 @@ export default function Header() {
                 </ButtonMenu>
 
                 <NavDesktop>
-                    <ul>
-                        <ListMenuDesktop>
-                            <Link 
-                                style={{ color: pathName === '/' ? cianBlue : white }} 
-                                to="/"
-                            >Home Page</Link>
-                        </ListMenuDesktop>
-                        <ListMenuDesktop>
-                            <Link
-                                style={{ color: pathName === '/login' ? cianBlue : white }}
-                                to="/login"
-                            >Login</Link>
-                        </ListMenuDesktop>
-                        <ListMenuDesktop>
-                            <Link
-                                style={{ color: pathName === '/register' ? cianBlue : white }}
-                                to="/register"
-                            >Registrar-se</Link>
-                        </ListMenuDesktop>
-                    </ul>
+                    {
+                        Object.keys(isAuth).length !== 0 ? (
+                            <ul>
+                                <ListMenuDesktop>
+                                <Link 
+                                    style={{ color: pathName === '/' ? cianBlue : white }} 
+                                    to="/"
+                                >Home Page</Link>
+                                </ListMenuDesktop>
+                                <ListMenuDesktop>
+                                    <Link
+                                        style={{ color: pathName === '/login' ? cianBlue : white }}
+                                        to="/dashboard"
+                                    >Dashboard</Link>
+                                </ListMenuDesktop>
+                                <ListMenuDesktop>
+                                    <Link
+                                        style={{ color: pathName === '/register' ? cianBlue : white }}
+                                        to="/credits"
+                                    >Creditos</Link>
+                                </ListMenuDesktop>
+                            </ul>
+                        ) : (
+                            <ul>
+                                <ListMenuDesktop>
+                                <Link 
+                                    style={{ color: pathName === '/' ? cianBlue : white }} 
+                                    to="/"
+                                >Home Page</Link>
+                                </ListMenuDesktop>
+                                <ListMenuDesktop>
+                                    <Link
+                                        style={{ color: pathName === '/login' ? cianBlue : white }}
+                                        to="/login"
+                                    >Login</Link>
+                                </ListMenuDesktop>
+                                <ListMenuDesktop>
+                                    <Link
+                                        style={{ color: pathName === '/register' ? cianBlue : white }}
+                                        to="/register"
+                                    >Registrar-se</Link>
+                                </ListMenuDesktop>
+                            </ul>
+                        )
+                    }
                 </NavDesktop>
 
                 <NavMobile style={isOpenMenu ? showMenu : hideMenu}>
-                    <ul>
-                        <ListMenuMobile>
-                            <Link 
-                                style={{ color: pathName === '/' ? cianBlue : white }} 
-                                to="/"
-                            >Home Page</Link>
-                        </ListMenuMobile>
-                        <ListMenuMobile>
-                            <Link
-                                style={{ color: pathName === '/login' ? cianBlue : white }}
-                                to="/login"
-                            >Login</Link>
-                        </ListMenuMobile>
-                        <ListMenuMobile>
-                            <Link
-                                style={{ color: pathName === '/register' ? cianBlue : white }}
-                                to="/register"
-                            >Registrar-se</Link>
-                        </ListMenuMobile>
-                    </ul>
+                    {
+                        Object.keys(isAuth).length !== 0 ? (
+                            <ul>
+                                <ListMenuMobile>
+                                    <Link 
+                                        style={{ color: pathName === '/' ? cianBlue : white }} 
+                                        to="/"
+                                    >Home Page</Link>
+                                </ListMenuMobile>
+                                <ListMenuMobile>
+                                    <Link
+                                        style={{ color: pathName === '/login' ? cianBlue : white }}
+                                        to="/dashboard"
+                                    >Dashboard</Link>
+                                </ListMenuMobile>
+                                <ListMenuMobile>
+                                    <Link
+                                        style={{ color: pathName === '/register' ? cianBlue : white }}
+                                        to="/credits"
+                                    >Creditos</Link>
+                                </ListMenuMobile>
+                            </ul>
+                        ) : (
+                            <ul>
+                                <ListMenuMobile>
+                                    <Link 
+                                        style={{ color: pathName === '/' ? cianBlue : white }} 
+                                        to="/"
+                                    >Home Page</Link>
+                                </ListMenuMobile>
+                                <ListMenuMobile>
+                                    <Link
+                                        style={{ color: pathName === '/login' ? cianBlue : white }}
+                                        to="/login"
+                                    >Login</Link>
+                                </ListMenuMobile>
+                                <ListMenuMobile>
+                                    <Link
+                                        style={{ color: pathName === '/register' ? cianBlue : white }}
+                                        to="/register"
+                                    >Registrar-se</Link>
+                                </ListMenuMobile>
+                            </ul>
+                        )
+                    }
                 </NavMobile>
             </ContainerFlexBetween>
         </BgHeader>

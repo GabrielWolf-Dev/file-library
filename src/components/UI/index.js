@@ -68,17 +68,29 @@ export const Button = styled.button`
 `;
 
 export const BtnAuthSocial = styled.button`
-    width: 32px;
+    width: 180px;
     height: 32px;
     background-color: ${white};
     font-size: 18px;
     color: ${cianBlue};
-    margin: 24px 8px 0 8px;
+    margin-top: 24px;
+    border: 1px solid ${black};
+    border-radius: 10px;
+    position: relative;
 
     @media (min-width: 368px) {
-        width: 42px;
+        width: 200px;
         height: 42px;
     }
+`;
+
+export const ContentBtnAuth = styled.span`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    font-size: 1rem;
 `;
 
 export const Form = styled.form`
@@ -158,7 +170,7 @@ export const LineMobile = styled.hr`
 `;
 
 export const IconAuthImg = styled.img`
-    width: 100%;
+    width: 42px;
     height: 100%;
 `;
 

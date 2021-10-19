@@ -17,12 +17,12 @@ import {
     Form,
     Button,
     BtnAuthSocial,
+    ContentBtnAuth,
     IconAuthImg,
     BoxPlayerAnimation,
     FieldSet,
     Label
  } from '../UI';
-import faceIcon from '../../assets/svg/face-icon.svg';
 import googleIcon from '../../assets/svg/google-icon.svg';
 
 export default function Register() {
@@ -30,21 +30,24 @@ export default function Register() {
 
     function registerAccount(event){
         event.preventDefault();
+        const form = event.target;
 
-        const datas = new FormData(event.target);
+        const datas = new FormData(form);
         const email = filterXSS(datas.get('email'));
         const pass = filterXSS(datas.get('pass'));
 
-        if(validationForm(email, pass)){
+        const isEmptyInputs = email !== '' || pass !== '';
+
+        if(validationForm(email, pass) && isEmptyInputs){
             alert('ok');
-            createAccount(email, pass);
+            createAccount(email, pass, form);
         } else {
             setIsAuth({});
             alert("E-mail e senha inválidos");
         }  
     }
  
-    function createAccount(email, pass){
+    function createAccount(email, pass, form){
         auth.createUserWithEmailAndPassword(email, pass)
         .then((user) => {
             setIsAuth({
@@ -53,12 +56,14 @@ export default function Register() {
             img: user.photoURL,
             uid: user.uid
           });
+
+          form.reset();
         })
         .catch((error) => {
           console.error(error.code);
           console.log(error.message);
           // Printar mensagem de erro
-          alert("Erro ao logar-se");
+          alert("Erro ao registrar-se");
         });
     }
 
@@ -80,7 +85,8 @@ export default function Register() {
                     <Form onSubmit={registerAccount}>
                         <FieldSet>
                             <Label htmlFor="email">E-mail</Label>
-                            <Input 
+                            <Input
+                                required
                                 type="email"
                                 id="email"
                                 name="email"
@@ -90,6 +96,7 @@ export default function Register() {
                         <FieldSet>
                             <Label htmlFor="pass">Senha</Label>
                             <Input
+                                required
                                 id="pass"
                                 name="pass"
                                 type="password"
@@ -110,16 +117,14 @@ export default function Register() {
                 <ContainerAuth>
                     <SubTitleAuth>Ou</SubTitleAuth>
                     <BtnAuthSocial>
-                        <IconAuthImg
-                            src={faceIcon}
-                            alt="Ícone do Facebook provida pelo Font Awesome"
-                        />
-                    </BtnAuthSocial>
-                    <BtnAuthSocial>
-                        <IconAuthImg
-                            src={googleIcon}
-                            alt="Ícone do Google provida pelo Font Awesome"
-                        />
+                        <ContentBtnAuth>
+                            Fazer login com
+
+                            <IconAuthImg
+                                src={googleIcon}
+                                alt="Ícone do Google provida pelo Font Awesome"
+                            />
+                        </ContentBtnAuth>
                     </BtnAuthSocial>
                 </ContainerAuth>
                 <Footer />
