@@ -1,6 +1,7 @@
 import React from 'react';
 import Slider from "react-slick";
 import { Player } from '@lottiefiles/react-lottie-player';
+import { Link } from 'react-router-dom';
 
 import {
     Container,
@@ -16,7 +17,10 @@ import {
     ImgSectionDesktop,
     BtnDesktop,
     BgAlternativeSections,
-    AnimationContainer
+    AnimationContainer,
+    ContainerDots,
+    ListDots,
+    Dots
 } from './style';
 
 import "slick-carousel/slick/slick.css";
@@ -27,7 +31,6 @@ import registerLoginAcccount from '../../assets/svg/register-account.svg';
 
 import Header from '../Header';
 import Footer from '../Footer';
-import { Link } from 'react-router-dom';
 
 export default function Home(){
     const settings = {
@@ -35,7 +38,13 @@ export default function Home(){
         autoplay: true,
         autoplaySpeed: 3000,
         slidesToShow: 1,
-        slidesToScroll: 1
+        slidesToScroll: 1,
+        appendDots: dots => (
+            <ContainerDots>
+                <ListDots>{dots}</ListDots>
+            </ContainerDots>
+        ),
+        customPaging: i => <Dots>{i}</Dots>
     };
 
     return(

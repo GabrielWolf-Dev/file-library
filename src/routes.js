@@ -6,6 +6,7 @@ import {
     Redirect
 } from 'react-router-dom';
 import { useAuth } from './hooks/useAuth';
+import { ErroMsgProv } from './context/errorMsg';
 
 import Home from './components/Home';
 import Dashboard from './components/Dashboard';
@@ -36,8 +37,10 @@ const Routes = () => (
         <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/credits" component={Credits} />
-            <Route path="/login" component={Login} />
-            <Route path="/register" component={Register} />
+            <ErroMsgProv>
+                <Route path="/login" component={Login} />
+                <Route path="/register" component={Register} />
+            </ErroMsgProv>
             <PrivateRoute path="/dashboard" component={Dashboard} />
             <Route component={Error404} />
         </Switch>

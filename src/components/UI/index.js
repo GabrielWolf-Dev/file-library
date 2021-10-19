@@ -3,7 +3,8 @@ import {
     black,
     cianBlue,
     orange,
-    white
+    white,
+    red
 } from './colors';
 
 /*-- Containers --*/
@@ -37,7 +38,7 @@ export const ContainerItemsRes = styled(Container)`
     @media (min-width: 768px) { justify-content: space-evenly; }
     @media (min-width: 1280px) {
         justify-content: space-between;
-        height: 50vh;
+        height: 60vh;
     }
 `;
 
@@ -123,6 +124,25 @@ export const Label = styled.label`
     color: ${black};
     margin-left: 8px;
 
+`;
+
+/*-- Messages --*/
+
+export const ErrorMsg = styled.div`
+    width: 100%;
+    max-width: 400px;
+    padding: 12px 2%;
+    border-radius: 10px;
+    background-color: ${red};
+    color: ${white};
+    font-size: 1rem;
+    text-align: center;
+    position: absolute;
+    top: 160px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    @media (min-width: 768px) { top: 180px; }
 `;
 
 /*-- Fonts --*/

@@ -19,7 +19,6 @@ const db = firebase.firestore();
 const auth = firebase.auth();
 const storage = firebase.storage();
 const providerGoogle = new firebase.auth.GoogleAuthProvider();
-const providerFaceBook = new firebase.auth.FacebookAuthProvider();
 
 
 export {
@@ -27,5 +26,4 @@ export {
     auth,
     providerGoogle,
     storage,
-    providerFaceBook
 };

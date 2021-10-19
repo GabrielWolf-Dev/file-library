@@ -4,6 +4,7 @@ import { Player } from '@lottiefiles/react-lottie-player';
 import { useAuth } from '../../hooks/useAuth';
 import { Redirect } from 'react-router-dom';
 import { auth } from '../../firebase';
+import { useMsgError } from '../../hooks/useMsgError';
 
 import Header from '../Header';
 import Footer from '../Footer';
@@ -21,12 +22,14 @@ import {
     IconAuthImg,
     BoxPlayerAnimation,
     FieldSet,
-    Label
+    Label,
+    ErrorMsg
  } from '../UI';
 import googleIcon from '../../assets/svg/google-icon.svg';
 
 export default function Register() {
     const [isAuth, setIsAuth] = useAuth();
+    const { isError, setIsError, msgError, setMsgError } = useMsgError();
 
     function registerAccount(event){
         event.preventDefault();
@@ -41,9 +44,11 @@ export default function Register() {
         if(validationForm(email, pass) && isEmptyInputs){
             alert('ok');
             createAccount(email, pass, form);
+            setIsError(false);
         } else {
             setIsAuth({});
-            alert("E-mail e senha inválidos");
+            setIsError(true);
+            setMsgError("E-mail ou senha inválidos");
         }  
     }
  
@@ -62,8 +67,9 @@ export default function Register() {
         .catch((error) => {
           console.error(error.code);
           console.log(error.message);
-          // Printar mensagem de erro
-          alert("Erro ao registrar-se");
+          
+          setIsError(true);
+          setMsgError("Houve uma falha no registro, por favor tente novamente");
         });
     }
 
@@ -79,6 +85,7 @@ export default function Register() {
             <Redirect to={{ pathname: '/dashboard'}} />
         ) : (
             <>
+            {isError ? (<ErrorMsg>{msgError}</ErrorMsg>) : false}
                 <Header />
                 <TitleBigger style={{ marginTop: '48px' }}>Registrar-se</TitleBigger>
                 <ContainerItemsRes>
@@ -102,6 +109,8 @@ export default function Register() {
                                     name="pass"
                                     type="password"
                                     placeholder="Senha"
+                                    title="Senha deve conter no mínimo 8 caracteres contendo letra maiúscula, minúscula, número e caracter especial"
+                                    pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#?!])[0-9a-zA-Z$*&@#?!]{8,}$"
                                 />
                             </FieldSet>
                             <Button type="submit">Registrar</Button>

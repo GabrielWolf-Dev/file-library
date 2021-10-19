@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { filterXSS } from 'xss';
 import { auth } from '../../firebase';
 import { useAuth } from '../../hooks/useAuth';
+import { useMsgError } from '../../hooks/useMsgError';
 
 import Header from '../Header';
 import Footer from '../Footer';
@@ -20,13 +21,15 @@ import {
     ContentBtnAuth,
     IconAuthImg,
     Label,
-    FieldSet
+    FieldSet,
+    ErrorMsg
 } from '../UI';
 import secureLogin from '../../assets/svg/login-img.svg';
 import googleIcon from '../../assets/svg/google-icon.svg';
 
 export default function Login() {
     const [isAuth, setIsAuth] = useAuth();
+    const { isError, setIsError, msgError, setMsgError } = useMsgError();
 
     function signIn(event){
         event.preventDefault();
@@ -47,18 +50,23 @@ export default function Login() {
                     img: user.photoURL,
                     uid: user.uid
                 });
-                alert('Login realizado com sucesso!');
 
+                setIsError(false);
                 form.reset();
             })
             .catch((error) => {
                 console.error(error.code);
                 console.log(error.message);
-                // Printar mensagem de erro
-                alert("Erro ao logar-se");
+                
+                setIsError(true);
+                error.code === "auth/operation-not-allowed"
+                    ? setMsgError("Operação não foi permitida, estamos com erro na autenticação do sistema, por favor volte mais tarde") 
+                    : setMsgError("Login inválido");
             });
-        else
-            alert('Campos vazios!');
+        else {
+            setIsError(true);
+            setMsgError("Campos vazios!");
+        }
         
     }
     return (
@@ -66,6 +74,7 @@ export default function Login() {
             <Redirect to={{ pathname: '/dashboard'}} />
             ) : (
                 <>
+                    {isError ? (<ErrorMsg>{msgError}</ErrorMsg>) : false}
                     <Header />
                     <TitleBigger style={{ marginTop: '48px' }}>Login</TitleBigger>
                     <ContainerItemsRes>
