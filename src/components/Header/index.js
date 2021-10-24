@@ -17,9 +17,9 @@ import { white, cianBlue } from '../UI/colors';
 
 export default function Header() {
     const [isOpenMenu, setIsOpenMenu] = useState(false);
-    const [isAuth] =  useAuth();
+    const { isAuth } =  useAuth();
     const pathName = window.location.pathname;
-
+    
     const showMenu = {
         visibility: 'visible',
         opacity: '1',

@@ -5,6 +5,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { Redirect } from 'react-router-dom';
 import { auth } from '../../firebase';
 import { useMsgError } from '../../hooks/useMsgError';
+import { ErroMsgProv } from '../../context/errorMsg';
 
 import Header from '../Header';
 import Footer from '../Footer';
@@ -28,7 +29,7 @@ import {
 import googleIcon from '../../assets/svg/google-icon.svg';
 
 export default function Register() {
-    const [isAuth, setIsAuth] = useAuth();
+    const { isAuth, setIsAuth, googleAuth } = useAuth();
     const { isError, setIsError, msgError, setMsgError } = useMsgError();
 
     function registerAccount(event){
@@ -59,7 +60,7 @@ export default function Register() {
             name: user.displayName,
             email: user.email,
             img: user.photoURL,
-            uid: user.uid
+            uid: user.uid,
           });
 
           form.reset();
@@ -84,7 +85,7 @@ export default function Register() {
         Object.keys(isAuth).length !== 0 ? (
             <Redirect to={{ pathname: '/dashboard'}} />
         ) : (
-            <>
+            <ErroMsgProv>
             {isError ? (<ErrorMsg>{msgError}</ErrorMsg>) : false}
                 <Header />
                 <TitleBigger style={{ marginTop: '48px' }}>Registrar-se</TitleBigger>
@@ -109,7 +110,7 @@ export default function Register() {
                                     name="pass"
                                     type="password"
                                     placeholder="Senha"
-                                    title="Senha deve conter no mínimo 8 caracteres contendo letra maiúscula, minúscula, número e caracter especial"
+                                    title="Senha deve conter no mínimo 8 caracteres contendo letra maiúscula, minúscula, número e um caracter especial"
                                     pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#?!])[0-9a-zA-Z$*&@#?!]{8,}$"
                                 />
                             </FieldSet>
@@ -117,9 +118,9 @@ export default function Register() {
                         </Form>
 
                         <SubTitleAuth>Ou</SubTitleAuth>
-                        <BtnAuthSocial>
+                        <BtnAuthSocial onClick={googleAuth}>
                             <ContentBtnAuth>
-                                Fazer login com
+                                Registrar-se com
 
                                 <IconAuthImg
                                     src={googleIcon}
@@ -139,7 +140,7 @@ export default function Register() {
                     </BoxPlayerAnimation>
                 </ContainerItemsRes>
                 <Footer />
-            </>
+            </ErroMsgProv>
         )
     )
 }

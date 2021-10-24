@@ -1,10 +1,9 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
 import { auth } from '../../firebase';
 import { useAuth } from '../../hooks/useAuth';
 
 export default function Dashboard() {
-    const [isAuth, setIsAuth] = useAuth();
+    const { setIsAuth } = useAuth();
 
     function logout(){
         auth.signOut().then(() => {
@@ -17,13 +16,9 @@ export default function Dashboard() {
     }
 
     return (
-        Object.keys(isAuth).length !== 0 ? (
-            <div>
-                <h1>Dashboard Page</h1>
-                <button onClick={logout}>Logout</button>
-            </div>
-        ) : (
-            <Redirect to={{ pathname: '/login'}} />
-        )
+        <div>
+            <h1>Dashboard Page</h1>
+            <button onClick={logout}>Logout</button>
+        </div>
     )
 }

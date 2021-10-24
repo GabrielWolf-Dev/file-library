@@ -6,7 +6,6 @@ import {
     Redirect
 } from 'react-router-dom';
 import { useAuth } from './hooks/useAuth';
-import { ErroMsgProv } from './context/errorMsg';
 
 import Home from './components/Home';
 import Dashboard from './components/Dashboard';
@@ -16,7 +15,7 @@ import Error404 from './components/Error-404';
 import Credits from './components/Credits';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-    const [isAuth] = useAuth();
+    const { isAuth } = useAuth();
 
     return(
         <Route
@@ -37,10 +36,8 @@ const Routes = () => (
         <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/credits" component={Credits} />
-            <ErroMsgProv>
-                <Route path="/login" component={Login} />
-                <Route path="/register" component={Register} />
-            </ErroMsgProv>
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
             <PrivateRoute path="/dashboard" component={Dashboard} />
             <Route component={Error404} />
         </Switch>

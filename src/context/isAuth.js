@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { auth } from '../firebase';
+import { auth, providerGoogle } from '../firebase';
 
 export const IsAuthContext = createContext([]);
 
@@ -19,8 +19,26 @@ export const IsAuthProv = (props) => {
         });
     }, []);
 
+    function googleAuth(){
+      auth.signInWithPopup(providerGoogle)
+        .then(result => setIsAuth({
+          name: result.user.displayName,
+          email: result.user.email,
+          img: result.user.photoURL,
+          uid: result.user.uid
+        }))
+        .catch((error) => {
+          console.log(error.code);
+          console.error(error.message);
+      });
+    }
+
     return(
-        <IsAuthContext.Provider value={[isAuth, setIsAuth]}>
+        <IsAuthContext.Provider value={{
+          isAuth,
+          setIsAuth,
+          googleAuth
+        }}>
             {props.children}
         </IsAuthContext.Provider>
     );

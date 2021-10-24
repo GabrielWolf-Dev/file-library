@@ -4,6 +4,7 @@ import { filterXSS } from 'xss';
 import { auth } from '../../firebase';
 import { useAuth } from '../../hooks/useAuth';
 import { useMsgError } from '../../hooks/useMsgError';
+import { ErroMsgProv } from '../../context/errorMsg';
 
 import Header from '../Header';
 import Footer from '../Footer';
@@ -28,7 +29,7 @@ import secureLogin from '../../assets/svg/login-img.svg';
 import googleIcon from '../../assets/svg/google-icon.svg';
 
 export default function Login() {
-    const [isAuth, setIsAuth] = useAuth();
+    const { isAuth, setIsAuth, googleAuth } = useAuth();
     const { isError, setIsError, msgError, setMsgError } = useMsgError();
 
     function signIn(event){
@@ -73,7 +74,7 @@ export default function Login() {
         Object.keys(isAuth).length !== 0 ? (
             <Redirect to={{ pathname: '/dashboard'}} />
             ) : (
-                <>
+                <ErroMsgProv>
                     {isError ? (<ErrorMsg>{msgError}</ErrorMsg>) : false}
                     <Header />
                     <TitleBigger style={{ marginTop: '48px' }}>Login</TitleBigger>
@@ -104,7 +105,7 @@ export default function Login() {
                             </Form>
                             
                             <SubTitleAuth>Ou</SubTitleAuth>
-                            <BtnAuthSocial>
+                            <BtnAuthSocial onClick={googleAuth}>
                                 <ContentBtnAuth>
                                     Fazer login com
 
@@ -125,7 +126,7 @@ export default function Login() {
                         </BoxPlayerAnimation>
                     </ContainerItemsRes>
                     <Footer />
-                </>
+                </ErroMsgProv>
             )
     )
 }
