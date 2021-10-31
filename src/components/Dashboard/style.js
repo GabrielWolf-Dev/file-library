@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { black, cianBlue } from '../UI/colors';
+import { black, cianBlue, white } from '../UI/colors';
 
 export const NavAccount = styled.nav`
     width: 100%;
@@ -110,4 +110,34 @@ export const SelectFilter = styled.select`
     font-size: 1rem;
     padding: 8px 0;
     cursor: pointer;
+`;
+
+export const ImgIcon = styled.img`
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+`;
+
+export const BtnAddFile = styled.button`
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: ${cianBlue};
+    color: ${white};
+    transition: ease-out .3s;
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+
+    &:hover {
+        opacity: 0.8;
+    }
+
+    @media (min-width: 768px) {
+        width: 42px;
+        height: 42px;
+
+        bottom: 48px;
+        right: 24px;
+    }
 `;
