@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { black, cianBlue, white } from '../UI/colors';
+import { black, cianBlue, white, orange } from '../UI/colors';
 
 export const NavAccount = styled.nav`
     width: 100%;
@@ -128,6 +128,7 @@ export const BtnAddFile = styled.button`
     position: fixed;
     bottom: 16px;
     right: 16px;
+    z-index: 2;
 
     &:hover {
         opacity: 0.8;
@@ -140,4 +141,47 @@ export const BtnAddFile = styled.button`
         bottom: 48px;
         right: 24px;
     }
+`;
+
+export const PopUpFileAdd = styled.aside`
+    width: 100%;
+    max-width: 300px;
+    padding: 32px 2%;
+    border-radius: 10px;
+    background-color: ${black};
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 2;
+
+    @media (min-width: 768px) {
+        max-width: 450px;
+    }
+`;
+
+export const LabelFileInput = styled.label`
+    width: 200px;
+    height: 32px;
+    line-height: 32px;
+    background-color: ${orange};
+    border-radius: 10px;
+    color: ${white};
+    cursor: pointer;
+    display: block;
+    margin: 16px auto 0 auto;
+
+    @media (min-width: 768px) {
+        height: 42px;
+        line-height: 42px;
+    }
+`;
+
+export const BgPopUpFile = styled.div`
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    transition: all ease-out .3s;
 `;

@@ -25,6 +25,8 @@ const GlobalStyle = createGlobalStyle`
       border: 0;
       cursor: pointer;
     }
+
+    input[type='file'] { display: none; }
     
     ul { list-style-type: none; }
     

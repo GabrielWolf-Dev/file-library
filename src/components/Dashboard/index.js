@@ -7,7 +7,6 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import Add from '@material-ui/icons/Add';
 
 import Header from '../Header';
-import Footer from '../Footer';
 
 import gridView from '../../assets/svg/grid_view.svg';
 import Logout from '../../assets/svg/logout.svg';
@@ -16,6 +15,8 @@ import {
     TitleBigger,
     Input,
     Container,
+    SubTitle,
+    Button,
 } from '../UI';
 import {
     NavAccount,
@@ -28,13 +29,19 @@ import {
     SelectFilter,
     LabelSearch,
     ImgIcon,
-    BtnAddFile
+    BtnAddFile,
+    PopUpFileAdd,
+    LabelFileInput,
+    BgPopUpFile
 } from './style';
+import { white } from '../UI/colors';
 
 export default function Dashboard() {
     const [isGrid, setIsGrid] = useState(true);
+    const [isOpenPopUp, setIsOpenPopUp] = useState(false);
     const { isAuth, setIsAuth } = useAuth();
-    const layoutsFiles = {
+
+    const layouts = {
         grid: {
             display: 'flex',
             justifyContent: 'space-evenly',
@@ -47,9 +54,32 @@ export default function Dashboard() {
             alignItems: 'center',
             gap: '24px',
             flexDirection: 'column'
+        },
+        openPopUp: {
+            transform: 'scale(1) translate(-50%, -50%)',
+            transition: 'all ease-out .3s',
+            opacity: '1',
+            visibility: 'visible'
+        },
+        notOpenPopUp: {
+            transform: 'scale(0) translate(-50%, -50%)',
+            transition: 'all ease-out .3s',
+            opacity: '0',
+            visibility: 'hidden'
+        },
+        showBg: {
+            opacity: '1',
+            visibility: 'visible'
+        },
+        hiddenBg: {
+            opacity: '0',
+            visibility: 'hidden'
         }
     };
-    const [layoutFile, setLayoutFile] = useState(layoutsFiles.grid);
+
+    const [layoutFile, setLayoutFile] = useState(layouts.grid);
+    const [openPopUp, setOpenPopUp] = useState(layouts.notOpenPopUp);
+    const [bgPopUp, setBgPopUp] = useState(layouts.hiddenBg);
 
     function logout(){
         auth.signOut().then(() => {
@@ -61,10 +91,15 @@ export default function Dashboard() {
           });
     }
 
-    useEffect(() => isGrid ? setLayoutFile(layoutsFiles.grid) : setLayoutFile(layoutsFiles.column), [isGrid]);
+    useEffect(() => isGrid ? setLayoutFile(layouts.grid) : setLayoutFile(layouts.column), [isGrid]);
+    useEffect(() => {
+        isOpenPopUp ? setOpenPopUp(layouts.openPopUp) : setOpenPopUp(layouts.notOpenPopUp);
+        isOpenPopUp ? setBgPopUp(layouts.showBg) : setBgPopUp(layouts.hiddenBg);
+    }, [isOpenPopUp]);
 
     return (
         <>
+            <BgPopUpFile onClick={() => setIsOpenPopUp(!isOpenPopUp)} style={bgPopUp} />
             <Header />
             <TitleBigger style={{ marginTop: '48px' }}>Dashboard</TitleBigger>
             <NavAccount>
@@ -128,10 +163,22 @@ export default function Dashboard() {
                 <p>asasa</p>
             </Container>
 
-            <BtnAddFile onClick={() => alert("Adicionar arquivos")}>
+            <BtnAddFile onClick={() => setIsOpenPopUp(!isOpenPopUp)}>
                 <Add />
             </BtnAddFile>
-            <Footer />
+
+            <PopUpFileAdd
+                style={openPopUp}
+            >
+                <SubTitle style={{ color: white }}>Upload do arquivo</SubTitle>
+                <LabelFileInput htmlFor="fileInput">Escolher arquivo</LabelFileInput>
+                <input
+                    type="file"
+                    id="fileInput"
+                />
+
+                <Button>Fazer Upload</Button>
+            </PopUpFileAdd>
         </>
     )
 }

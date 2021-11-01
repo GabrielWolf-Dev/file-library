@@ -60,7 +60,7 @@ export const Button = styled.button`
     border-radius: 10px;
     background-color: ${cianBlue};
     color: ${white};
-    font-size: 1.25rem;
+    font-size: 1rem;
     font-weight: normal;
     margin-top: 24px;
 `;
@@ -108,7 +108,7 @@ export const Input = styled.input`
     padding-left: 16px;
     font-size: 1rem;
     font-weight: lighter;
-    color: ${black};
+    background-color: transparent;
 `;
 
 export const FieldSet = styled.fieldset`
