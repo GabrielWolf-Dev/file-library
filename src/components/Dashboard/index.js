@@ -1,45 +1,32 @@
-import React, { useEffect, useState } from 'react';
-import { auth } from '../../firebase';
+import React, { useEffect, useRef, useState } from 'react';
+import { storage, db  } from '../../firebase';
 import { useAuth } from '../../hooks/useAuth';
-import Search from '@material-ui/icons/Search';
-import ViewList from '@material-ui/icons/ViewList';
-import SettingsIcon from '@material-ui/icons/Settings';
+
 import Add from '@material-ui/icons/Add';
 
 import Header from '../Header';
-
-import gridView from '../../assets/svg/grid_view.svg';
-import Logout from '../../assets/svg/logout.svg';
+import MenuAccount from './MenuAccount';
+import Filters from './Filters';
 
 import {
     TitleBigger,
-    Input,
-    Container,
     SubTitle,
     Button,
 } from '../UI';
 import {
-    NavAccount,
-    ImgAccount,
-    FigCaptionImg,
-    ButtonIcon,
-    AccountContainerFlex,
-    BoxInputSearch,
-    BoxFilter,
-    SelectFilter,
-    LabelSearch,
-    ImgIcon,
     BtnAddFile,
     PopUpFileAdd,
     LabelFileInput,
     BgPopUpFile
 } from './style';
 import { white } from '../UI/colors';
+import ListFiles from './ListFiles';
 
 export default function Dashboard() {
     const [isGrid, setIsGrid] = useState(true);
     const [isOpenPopUp, setIsOpenPopUp] = useState(false);
-    const { isAuth, setIsAuth } = useAuth();
+    const { isAuth } = useAuth();
+    const fileInput = useRef(null);
 
     const layouts = {
         grid: {
@@ -81,14 +68,37 @@ export default function Dashboard() {
     const [openPopUp, setOpenPopUp] = useState(layouts.notOpenPopUp);
     const [bgPopUp, setBgPopUp] = useState(layouts.hiddenBg);
 
-    function logout(){
-        auth.signOut().then(() => {
-            alert('Você se deslogou!');
-            setIsAuth({});
-          }).catch((error) => {
-            console.log(error.message);
-            alert('Erro ao deslogar-se');
-          });
+    function uploadFile(){
+        let file = fileInput.current.files[0];
+
+        if(file !== undefined){
+            const uploadTask = storage.ref(`lib/${isAuth.uid}/files/${file.name}`).put(file);
+            uploadTask.on('state_changed',(snapshot)=>{
+                //const progressTemp = (snapshot.bytesTransferred/snapshot.totalBytes) * 1;
+                //setProgress(progressTemp);
+                console.log(snapshot);
+            },
+            error => { throw new Error(error) },
+            () => {
+                storage.ref(`lib/${isAuth.uid}/files/${file.name}`).getDownloadURL()
+                .then((url)=>{
+                    db.collection('lib').doc(isAuth.uid).collection("files").add({
+                        name: file.name,
+                        url: url,
+                        type: file.type
+                    })
+                    //setProgress(0);
+
+                    alert('Upload realizado com sucesso!');
+                })
+                .catch(error => {
+                    alert('Erro');
+                    console.error(error);
+                });
+            })
+        } else {
+            alert('Insira um arquivo para fazer o upload');
+        }
     }
 
     useEffect(() => isGrid ? setLayoutFile(layouts.grid) : setLayoutFile(layouts.column), [isGrid]);
@@ -100,84 +110,28 @@ export default function Dashboard() {
     return (
         <>
             <BgPopUpFile onClick={() => setIsOpenPopUp(!isOpenPopUp)} style={bgPopUp} />
+            
             <Header />
             <TitleBigger style={{ marginTop: '48px' }}>Dashboard</TitleBigger>
-            <NavAccount>
-                <figure style={{ height: '100%' }}>
-                    <ImgAccount src={isAuth.img} alt={`Foto de ${isAuth.name}`} />
 
-                    <FigCaptionImg>{isAuth.name}</FigCaptionImg>
-                </figure>
-
-                <div>
-                    <ButtonIcon onClick={logout} style={{ marginRight: '8px' }}>
-                        <img src={Logout} alt="Ícone de Deslogar" style={{width: '100%', height: '100%'}} />
-                    </ButtonIcon>
-
-                    <ButtonIcon onClick={() => alert('Abrir menu de Perfil')}>
-                        <SettingsIcon style={{  width: '100%', height: '100%'}} />
-                    </ButtonIcon>
-                </div>
-            </NavAccount>
-
-            <AccountContainerFlex>
-                <BoxInputSearch>
-                    <Input
-                        id="search"
-                        type="text"
-                        placeholder="Pesquisar"
-                    />
-
-                    <LabelSearch htmlFor="search">
-                        <Search />
-                    </LabelSearch>
-                </BoxInputSearch>
-
-                <BoxFilter>
-                    <SelectFilter name="filter_files">
-                        <option value="all">Todos</option>
-                        <option value="phtos">Fotos</option>
-                        <option value="documents">Documentos</option>
-                    </SelectFilter>
-
-                    {
-                        isGrid ? (
-                            <ViewList
-                                style={{ cursor: 'pointer', fontSize: '32px' }}
-                                onClick={() => setIsGrid(!isGrid)}
-                            />
-                        ) : (
-                            <ImgIcon
-                                src={gridView}
-                                alt="Ícone de uma ilustração de grid layout"
-                                onClick={() => setIsGrid(!isGrid)}
-                            />
-                        )
-                    }
-                    
-                </BoxFilter>
-            </AccountContainerFlex>
-            <Container style={layoutFile}>
-                <p>asasa</p>
-                <p>asasa</p>
-                <p>asasa</p>
-            </Container>
+            <MenuAccount />
+            <Filters isGrid={isGrid} setIsGrid={setIsGrid} />
+            <ListFiles isGrid={isGrid} layoutFile={layoutFile} />
 
             <BtnAddFile onClick={() => setIsOpenPopUp(!isOpenPopUp)}>
                 <Add />
             </BtnAddFile>
 
-            <PopUpFileAdd
-                style={openPopUp}
-            >
+            <PopUpFileAdd style={openPopUp}>
                 <SubTitle style={{ color: white }}>Upload do arquivo</SubTitle>
                 <LabelFileInput htmlFor="fileInput">Escolher arquivo</LabelFileInput>
                 <input
                     type="file"
                     id="fileInput"
+                    ref={fileInput}
                 />
 
-                <Button>Fazer Upload</Button>
+                <Button onClick={uploadFile}>Fazer Upload</Button>
             </PopUpFileAdd>
         </>
     )

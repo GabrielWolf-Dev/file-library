@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { black, cianBlue, white, orange } from '../UI/colors';
+import { black, cianBlue, white, orange, blueDark } from '../UI/colors';
 
 export const NavAccount = styled.nav`
     width: 100%;
@@ -18,7 +18,7 @@ export const NavAccount = styled.nav`
     }
 `;
 
-export const AccountContainerFlex = styled.section`
+export const FilterContainerFlex = styled.section`
     width: 100%;
     max-width: 300px;
     margin: 32px auto;
@@ -184,4 +184,34 @@ export const BgPopUpFile = styled.div`
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1;
     transition: all ease-out .3s;
+`;
+
+export const List = styled.ul`
+    width: 100%;
+    max-width: 300px;
+    height: 100%;
+    margin: auto;
+    padding: 0 2%;
+    text-align: center;
+    flex-wrap: wrap;
+
+    @media (min-width: 468px) { max-width: 440px; }
+
+    @media (min-width: 568px) { max-width: 540px; }
+
+    @media (min-width: 768px) { max-width: 1280px; }
+`;
+
+export const ItemList = styled.li`
+    width: 100%;
+    max-width: 250px;
+    height: 150px;
+    border-radius: 10px;
+    background-color: ${blueDark};
+    color: ${white};
+`;
+
+export const ImgList = styled.img`
+    width: 100%;
+    height: 100px;
 `;

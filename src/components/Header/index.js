@@ -56,13 +56,13 @@ export default function Header() {
                                 </ListMenuDesktop>
                                 <ListMenuDesktop>
                                     <Link
-                                        style={{ color: pathName === '/login' ? cianBlue : white }}
+                                        style={{ color: pathName === '/dashboard' ? cianBlue : white }}
                                         to="/dashboard"
                                     >Dashboard</Link>
                                 </ListMenuDesktop>
                                 <ListMenuDesktop>
                                     <Link
-                                        style={{ color: pathName === '/register' ? cianBlue : white }}
+                                        style={{ color: pathName === '/credits' ? cianBlue : white }}
                                         to="/credits"
                                     >Creditos</Link>
                                 </ListMenuDesktop>
@@ -104,13 +104,13 @@ export default function Header() {
                                 </ListMenuMobile>
                                 <ListMenuMobile>
                                     <Link
-                                        style={{ color: pathName === '/login' ? cianBlue : white }}
+                                        style={{ color: pathName === '/dashboard' ? cianBlue : white }}
                                         to="/dashboard"
                                     >Dashboard</Link>
                                 </ListMenuMobile>
                                 <ListMenuMobile>
                                     <Link
-                                        style={{ color: pathName === '/register' ? cianBlue : white }}
+                                        style={{ color: pathName === '/credits' ? cianBlue : white }}
                                         to="/credits"
                                     >Creditos</Link>
                                 </ListMenuMobile>
