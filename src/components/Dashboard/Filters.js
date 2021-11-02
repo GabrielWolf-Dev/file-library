@@ -32,7 +32,10 @@ export default function Filters({ isGrid, setIsGrid }){
                 <BoxFilter>
                     <SelectFilter name="filter_files">
                         <option value="all">Todos</option>
-                        <option value="phtos">Fotos</option>
+                        <option value="photos">Fotos</option>
+                        <option value="gifs">Gifs</option>
+                        <option value="videos">Vídeos</option>
+                        <option value="sound">Áudios</option>
                         <option value="documents">Documentos</option>
                     </SelectFilter>
 

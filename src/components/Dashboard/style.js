@@ -1,5 +1,14 @@
 import styled from 'styled-components';
-import { black, cianBlue, white, orange, blueDark } from '../UI/colors';
+import { ZoomOutMap, MoreVert } from '@material-ui/icons';
+
+import { SubContent } from '../UI';
+import {
+    black,
+    cianBlue,
+    white,
+    orange,
+    blueDark
+} from '../UI/colors';
 
 export const NavAccount = styled.nav`
     width: 100%;
@@ -205,15 +214,47 @@ export const List = styled.ul`
 export const ItemList = styled.li`
     width: 100%;
     max-width: 250px;
-    height: 150px;
+    height: 180px;
     border-radius: 10px;
     background-color: ${blueDark};
     color: ${white};
 `;
 
-export const ImgList = styled.img`
+export const ImgList = styled.div`
     width: 100%;
-    height: 100px;
+    height: calc(100% - 70px);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+`;
+
+export const ContainerDescItem = styled.div`
+    width: 100%;
+    height: calc(100% - 120px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 4%;
+`;
+
+export const ButtonExpand = styled(ZoomOutMap)`
+    color: ${cianBlue};
+    cursor: pointer;
+    margin: 0 8px;
+`;
+
+export const ButtonConfig = styled(MoreVert)`
+    color: ${cianBlue};
+    cursor: pointer;
+`;
+
+export const NameItemList = styled(SubContent)`
+    width: 100px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 `;
 
 export const TableFiles = styled.table`
@@ -242,5 +283,5 @@ export const TdBody = styled.td`
     border-bottom: 1px solid ${orange};
     padding: 8px 2%;
     font-size: 1rem;
-    text-align: left;
+    text-align: center;
 `;

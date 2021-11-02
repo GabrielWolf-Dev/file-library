@@ -6,15 +6,21 @@ import { Player } from '@lottiefiles/react-lottie-player';
 import pdfImg from '../../assets/img/pdfImg.png';
 import gifImg from '../../assets/img/gifImg.png';
 import fileImg from '../../assets/img/fileImg.png';
+import micImg from '../../assets/img/micImg.png';
+import movieImg from '../../assets/img/movieImg.png';
 
 import {
     List,
     ItemList,
     ImgList,
+    ContainerDescItem,
+    NameItemList,
     TableFiles,
     ThThead,
     ThTheadName,
-    TdBody
+    TdBody,
+    ButtonExpand,
+    ButtonConfig
 } from './style';
 import { Button, Container, TitleBigger } from '../UI';
 
@@ -38,11 +44,26 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp }){
                                 return (
                                     <ItemList key={index}>
                                             <ImgList
-                                                src={file.type == 'image/png' || file.type == 'image/jpeg' || file.type == 'image/svg       +xml'  ? file.url 
-                                                : file.type == 'application/pdf' ? pdfImg
-                                                : file.type == 'image/gif' ? gifImg : fileImg}
-                                                alt={file.name}
-                                            />
+                                                style={{
+                                                    backgroundImage: `url(${
+                                                        file.type == 'image/png' || file.type == 'image/jpeg' || file.type == 'image/svg+xml' ? file.url 
+                                                        : file.type == 'application/pdf' ? pdfImg
+                                                        : file.type == 'image/gif' ? gifImg 
+                                                        : file.type == 'audio/mpeg' ? micImg 
+                                                        : file.type == 'video/x-matroska' || file.type == 'video/mp4' ? movieImg
+                                                        : fileImg
+                                                    })`
+                                                }}
+                                            ></ImgList>
+
+                                            <ContainerDescItem>
+                                                <NameItemList>{file.name}</NameItemList>
+
+                                                <div>
+                                                    <ButtonExpand style={{ marginRight: '8px' }} />
+                                                    <ButtonConfig />
+                                                </div>
+                                            </ContainerDescItem>
                                     </ItemList>
                                 )
                             }) : (
@@ -57,9 +78,12 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp }){
                                     <tbody>
                                         {
                                             files.map((file, index) => <tr key={index}>
-                                                <TdBody>{file.name}</TdBody>
+                                                <TdBody style={{ textAlign: 'left' }}>{file.name}</TdBody>
                                                 <TdBody>{file.size} MB</TdBody>
-                                                <TdBody>{file.name}</TdBody>
+                                                <TdBody>
+                                                    <ButtonExpand style={{ marginRight: '8px' }} />
+                                                    <ButtonConfig />
+                                                </TdBody>
                                             </tr>)
                                         }
                                     </tbody>

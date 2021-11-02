@@ -83,7 +83,7 @@ export default function Dashboard() {
                 storage.ref(`lib/${isAuth.uid}/files/${file.name}`).getDownloadURL()
                 .then((url)=>{
                     const convertToMB =  Math.trunc(file.size / 1024 / 1024);
-
+                    console.log(file.type);
                     if(convertToMB <= 200)
                         db.collection('lib').doc(isAuth.uid).collection("files").add({
                             name: file.name,
