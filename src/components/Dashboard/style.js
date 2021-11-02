@@ -215,3 +215,32 @@ export const ImgList = styled.img`
     width: 100%;
     height: 100px;
 `;
+
+export const TableFiles = styled.table`
+    width: 100%;
+    max-width: 300px;
+    margin-top: 32px;
+
+    @media (min-width: 368px){ max-width: 450px; }
+    @media (min-width: 768px) { max-width: 800px; }
+`;
+
+export const ThThead = styled.th`
+    border-bottom: 1px solid ${orange};
+    padding: 8px 0;
+    font-size: 1rem;
+    font-weight: 500;
+`;
+
+export const ThTheadName = styled(ThThead)`
+    width: 45%;
+    text-align: left;
+    padding: 8px 2%;
+`;
+
+export const TdBody = styled.td`
+    border-bottom: 1px solid ${orange};
+    padding: 8px 2%;
+    font-size: 1rem;
+    text-align: left;
+`;

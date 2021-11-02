@@ -82,13 +82,19 @@ export default function Dashboard() {
             () => {
                 storage.ref(`lib/${isAuth.uid}/files/${file.name}`).getDownloadURL()
                 .then((url)=>{
-                    db.collection('lib').doc(isAuth.uid).collection("files").add({
-                        name: file.name,
-                        url: url,
-                        type: file.type
-                    })
-                    //setProgress(0);
+                    const convertToMB =  Math.trunc(file.size / 1024 / 1024);
 
+                    if(convertToMB <= 200)
+                        db.collection('lib').doc(isAuth.uid).collection("files").add({
+                            name: file.name,
+                            url: url,
+                            type: file.type,
+                            size: convertToMB
+                        })
+                    else
+                        return alert("Tamanho máximo de 200 MB")
+                    //setProgress(0);
+                
                     alert('Upload realizado com sucesso!');
                 })
                 .catch(error => {
@@ -101,6 +107,10 @@ export default function Dashboard() {
         }
     }
 
+    function handlePopUp(){
+        setIsOpenPopUp(!isOpenPopUp);
+    }
+
     useEffect(() => isGrid ? setLayoutFile(layouts.grid) : setLayoutFile(layouts.column), [isGrid]);
     useEffect(() => {
         isOpenPopUp ? setOpenPopUp(layouts.openPopUp) : setOpenPopUp(layouts.notOpenPopUp);
@@ -109,16 +119,20 @@ export default function Dashboard() {
 
     return (
         <>
-            <BgPopUpFile onClick={() => setIsOpenPopUp(!isOpenPopUp)} style={bgPopUp} />
+            <BgPopUpFile onClick={handlePopUp} style={bgPopUp} />
             
             <Header />
             <TitleBigger style={{ marginTop: '48px' }}>Dashboard</TitleBigger>
 
             <MenuAccount />
             <Filters isGrid={isGrid} setIsGrid={setIsGrid} />
-            <ListFiles isGrid={isGrid} layoutFile={layoutFile} />
+            <ListFiles
+                handlePopUp={handlePopUp}
+                isGrid={isGrid}
+                layoutFile={layoutFile}
+            />
 
-            <BtnAddFile onClick={() => setIsOpenPopUp(!isOpenPopUp)}>
+            <BtnAddFile onClick={handlePopUp}>
                 <Add />
             </BtnAddFile>
 
