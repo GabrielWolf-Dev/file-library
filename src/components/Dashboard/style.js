@@ -193,6 +193,8 @@ export const BgPopUpFile = styled.div`
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1;
     transition: all ease-out .3s;
+    top: 0;
+    left: 0;
 `;
 
 export const List = styled.ul`
@@ -284,4 +286,20 @@ export const TdBody = styled.td`
     padding: 8px 2%;
     font-size: 1rem;
     text-align: center;
+`;
+
+export const ContainerImg = styled.aside`
+    width: 100%;
+    max-width: 80%;
+    padding: 24px 4%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    text-align: center;
+
+    
+    @media (min-width: 768px) { max-width: 750px; }
+    @media (min-width: 1280px) { max-width: 1000px; }
 `;

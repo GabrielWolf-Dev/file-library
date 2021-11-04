@@ -53,7 +53,9 @@ export default function Dashboard() {
             transition: 'all ease-out .3s',
             opacity: '0',
             visibility: 'hidden'
-        },
+        }
+    };
+    const bgStyle = {
         showBg: {
             opacity: '1',
             visibility: 'visible'
@@ -114,7 +116,7 @@ export default function Dashboard() {
     useEffect(() => isGrid ? setLayoutFile(layouts.grid) : setLayoutFile(layouts.column), [isGrid]);
     useEffect(() => {
         isOpenPopUp ? setOpenPopUp(layouts.openPopUp) : setOpenPopUp(layouts.notOpenPopUp);
-        isOpenPopUp ? setBgPopUp(layouts.showBg) : setBgPopUp(layouts.hiddenBg);
+        isOpenPopUp ? setBgPopUp(bgStyle.showBg) : setBgPopUp(bgStyle.hiddenBg);
     }, [isOpenPopUp]);
 
     return (
@@ -130,6 +132,7 @@ export default function Dashboard() {
                 handlePopUp={handlePopUp}
                 isGrid={isGrid}
                 layoutFile={layoutFile}
+                bgStyle={bgStyle}
             />
 
             <BtnAddFile onClick={handlePopUp}>

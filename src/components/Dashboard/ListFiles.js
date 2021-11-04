@@ -20,33 +20,83 @@ import {
     ThTheadName,
     TdBody,
     ButtonExpand,
-    ButtonConfig
+    ButtonConfig,
+    ContainerImg,
+    BgPopUpFile,
 } from './style';
 import { Button, Container, TitleBigger } from '../UI';
 
-export default function ListFiles({ layoutFile, isGrid, handlePopUp }){
+export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
     const { isAuth } = useAuth();
     const [files, setFiles] = useState([]);
+    const [fileImgExpand, setFileImgExpand] = useState({});
+    const [isImgSelected, setIsImgSelected] = useState(false);
+    const [isBgActive, setIsBgActive] = useState(bgStyle.hiddenBg);
 
     useEffect(() => {
         db.collection('lib').doc(isAuth.uid).collection('files')
         .onSnapshot(snapshot => setFiles(snapshot.docs.map(value => value.data())));
     }, [isAuth.uid]);
+
+    function showImgFile(e){
+        const list = e.target.closest('#itemList');
+        const listImgName = list.firstChild.dataset.name;
+        const listImgLink = list.firstChild.dataset.img;
+
+        setFileImgExpand({
+            name: listImgName,
+            img: listImgLink
+        });
+        setIsImgSelected(true);
+        setIsBgActive(bgStyle.showBg);
+    }
+
+    
+    function hideImgFile(){
+        setFileImgExpand({});
+        setIsImgSelected(false);
+        setIsBgActive(bgStyle.hiddenBg);
+    }
+
+    function showImgColumnGrid(e){
+        const listImgLink = e.target.dataset.img;
+        const listImgName = e.target.dataset.name;
+
+        setFileImgExpand({
+            name: listImgName,
+            img: listImgLink
+        });
+        setIsImgSelected(true);
+        setIsBgActive(bgStyle.showBg);
+    }
     
     return(
         <>
+            <BgPopUpFile onClick={hideImgFile} style={{
+                ...isBgActive,
+                zIndex: '3'
+            }} />
+            <ContainerImg style={{ display: isImgSelected ? 'block' : 'none' }}>
+                <img
+                    style={{ width: '100%', height: '100%' }}
+                    src={fileImgExpand.img}
+                    alt={fileImgExpand.name}
+                />
+            </ContainerImg>
             {
                 files.length !== 0 ? (
                     <List style={layoutFile}>
                         {
                             isGrid ? 
                             files.map((file, index) => {
+                                const isFileImg = file.type == 'image/png' || file.type == 'image/jpeg' || file.type == 'image/svg+xml';
+
                                 return (
-                                    <ItemList key={index}>
+                                    <ItemList key={index} id="itemList">
                                             <ImgList
                                                 style={{
                                                     backgroundImage: `url(${
-                                                        file.type == 'image/png' || file.type == 'image/jpeg' || file.type == 'image/svg+xml' ? file.url 
+                                                        isFileImg ? file.url 
                                                         : file.type == 'application/pdf' ? pdfImg
                                                         : file.type == 'image/gif' ? gifImg 
                                                         : file.type == 'audio/mpeg' ? micImg 
@@ -54,13 +104,21 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp }){
                                                         : fileImg
                                                     })`
                                                 }}
+                                                data-img={isFileImg ? file.url : undefined}
+                                                data-name={isFileImg ? file.name : undefined}
                                             ></ImgList>
 
                                             <ContainerDescItem>
                                                 <NameItemList>{file.name}</NameItemList>
 
                                                 <div>
-                                                    <ButtonExpand style={{ marginRight: '8px' }} />
+                                                    <ButtonExpand 
+                                                        onClick={showImgFile}
+                                                        style={{
+                                                            display: isFileImg ? 'inline-block' : 'none',
+                                                            marginRight: '8px'
+                                                        }}
+                                                    />
                                                     <ButtonConfig />
                                                 </div>
                                             </ContainerDescItem>
@@ -72,7 +130,7 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp }){
                                         <tr>
                                             <ThTheadName>Nome</ThTheadName>
                                             <ThThead>Tamanho</ThThead>
-                                            <ThThead>Opções</ThThead>
+                                            <ThThead style={{ textAlign: 'right', paddingRight: '16px' }}>Opções</ThThead>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -80,8 +138,18 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp }){
                                             files.map((file, index) => <tr key={index}>
                                                 <TdBody style={{ textAlign: 'left' }}>{file.name}</TdBody>
                                                 <TdBody>{file.size} MB</TdBody>
-                                                <TdBody>
-                                                    <ButtonExpand style={{ marginRight: '8px' }} />
+                                                <TdBody style={{ textAlign: 'right' }}>
+                                                        <ButtonExpand
+                                                            data-name={file.name}
+                                                            data-img={file.url}
+                                                            onClick={showImgColumnGrid}
+                                                            style={{
+                                                                display: file.type == 'image/png' || file.type == 'image/jpeg' || file.type == 'image/svg+xml'
+                                                                ? 'inline-block'
+                                                                : 'none',
+                                                                marginRight: '8px'
+                                                            }}
+                                                        />
                                                     <ButtonConfig />
                                                 </TdBody>
                                             </tr>)
