@@ -12,12 +12,17 @@ import {
     TitleBigger,
     SubTitle,
     Button,
+    SubContent,
+    WarningMsg,
+    SuccessMsg
 } from '../UI';
 import {
     BtnAddFile,
     PopUpFileAdd,
     LabelFileInput,
-    BgPopUpFile
+    BgPopUpFile,
+    LabelUpload,
+    ProgressUpload
 } from './style';
 import { white } from '../UI/colors';
 import ListFiles from './ListFiles';
@@ -27,6 +32,11 @@ export default function Dashboard() {
     const [isOpenPopUp, setIsOpenPopUp] = useState(false);
     const { isAuth } = useAuth();
     const fileInput = useRef(null);
+    const [isFileSelected, setIsFileSelected] = useState("Nenhum arquivo foi selecionado");
+    const [progress, setProgress] = useState(0);
+    const [isProgress, setIsProgress] = useState(false);
+    const [showMsgSuccess, setShowMsgSuccess] = useState(false);
+    const [showMsgWarning, setShowMsgWarning] = useState(false);
 
     const layouts = {
         grid: {
@@ -65,7 +75,6 @@ export default function Dashboard() {
             visibility: 'hidden'
         }
     };
-
     const [layoutFile, setLayoutFile] = useState(layouts.grid);
     const [openPopUp, setOpenPopUp] = useState(layouts.notOpenPopUp);
     const [bgPopUp, setBgPopUp] = useState(layouts.hiddenBg);
@@ -75,42 +84,59 @@ export default function Dashboard() {
 
         if(file !== undefined){
             const uploadTask = storage.ref(`lib/${isAuth.uid}/files/${file.name}`).put(file);
-            uploadTask.on('state_changed',(snapshot)=>{
-                //const progressTemp = (snapshot.bytesTransferred/snapshot.totalBytes) * 1;
-                //setProgress(progressTemp);
-                console.log(snapshot);
-            },
-            error => { throw new Error(error) },
-            () => {
-                storage.ref(`lib/${isAuth.uid}/files/${file.name}`).getDownloadURL()
-                .then((url)=>{
-                    const convertToMB =  Math.trunc(file.size / 1024 / 1024);
-                    console.log(file.type);
-                    if(convertToMB <= 200)
+            const convertToMB =  Math.trunc(file.size / 1024 / 1024);
+            const maxMBValue = 200;
+
+            if(convertToMB <= maxMBValue)
+                uploadTask.on('state_changed',(snapshot)=>{
+                    const progressTemp = (snapshot.bytesTransferred / snapshot.totalBytes) * 1;
+                    setProgress(progressTemp);
+                    setIsProgress(true);
+                },
+                error => { throw new Error(error) },
+                () => {
+                    storage.ref(`lib/${isAuth.uid}/files/${file.name}`).getDownloadURL()
+                    .then((url)=>{
                         db.collection('lib').doc(isAuth.uid).collection("files").add({
                             name: file.name,
                             url: url,
                             type: file.type,
                             size: convertToMB
-                        })
-                    else
-                        return alert("Tamanho máximo de 200 MB")
-                    //setProgress(0);
-                
-                    alert('Upload realizado com sucesso!');
+                        });
+                    
+                        setProgress(0);
+                        setIsProgress(false);
+                        successMsg();
+                    })
+                    .catch(error => console.error(error));
                 })
-                .catch(error => {
-                    alert('Erro');
-                    console.error(error);
-                });
-            })
+            else return warningMsg();
         } else {
             alert('Insira um arquivo para fazer o upload');
         }
     }
 
+    function warningMsg(){
+        setShowMsgWarning(true);
+        setTimeout(() => setShowMsgWarning(false), 2000);
+    }
+
+    function successMsg(){
+        setShowMsgSuccess(true);
+        setTimeout(() => setShowMsgSuccess(false), 2000);
+    }
+
     function handlePopUp(){
         setIsOpenPopUp(!isOpenPopUp);
+    }
+
+    function fileSelect(){
+        const fileName = fileInput.current.files[0].name;
+
+        if(fileInput !== null)
+            setIsFileSelected(fileName);
+        else
+            setIsFileSelected("Nenhum arquivo foi selecionado");
     }
 
     useEffect(() => isGrid ? setLayoutFile(layouts.grid) : setLayoutFile(layouts.column), [isGrid]);
@@ -122,6 +148,8 @@ export default function Dashboard() {
     return (
         <>
             <BgPopUpFile onClick={handlePopUp} style={bgPopUp} />
+            { showMsgWarning ? <WarningMsg>Tamanho máximo de 200 MB</WarningMsg> : false }
+            { showMsgSuccess ? <SuccessMsg>Upload realizado com sucesso!</SuccessMsg> : false }
             
             <Header />
             <TitleBigger style={{ marginTop: '48px' }}>Dashboard</TitleBigger>
@@ -143,12 +171,19 @@ export default function Dashboard() {
                 <SubTitle style={{ color: white }}>Upload do arquivo</SubTitle>
                 <LabelFileInput htmlFor="fileInput">Escolher arquivo</LabelFileInput>
                 <input
+                    onChange={fileSelect}
                     type="file"
                     id="fileInput"
                     ref={fileInput}
                 />
+                <SubContent>{isFileSelected}</SubContent>
 
                 <Button onClick={uploadFile}>Fazer Upload</Button>
+
+                <aside style={{ display: isProgress ? 'block' : 'none' }}>
+                    <LabelUpload htmlFor="fileUpload">Fazendo upload...</LabelUpload>
+                    <ProgressUpload id="fileUpload" value={progress} max="1"> {progress}% </ProgressUpload>
+                </aside>
             </PopUpFileAdd>
         </>
     )

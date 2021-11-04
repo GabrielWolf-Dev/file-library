@@ -7,7 +7,8 @@ import {
     cianBlue,
     white,
     orange,
-    blueDark
+    blueDark,
+    green
 } from '../UI/colors';
 
 export const NavAccount = styled.nav`
@@ -178,11 +179,34 @@ export const LabelFileInput = styled.label`
     color: ${white};
     cursor: pointer;
     display: block;
-    margin: 16px auto 0 auto;
+    margin: 16px auto 8px auto;
 
     @media (min-width: 768px) {
         height: 42px;
         line-height: 42px;
+    }
+`;
+
+export const LabelUpload = styled.label`
+    display: block;
+    margin-top: 8px;
+    color: ${white};
+`;
+
+export const ProgressUpload = styled.progress`
+    height: 16px;
+    -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+    
+    &::-webkit-progress-bar {
+        border-radius: 10px;
+        background-color: ${white};
+    }
+
+    &::-webkit-progress-value {
+        border-radius: 10px;
+        background-color: ${green};
     }
 `;
 

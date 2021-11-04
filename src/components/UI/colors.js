@@ -5,6 +5,7 @@ const blueDark = '#324C5D';
 const yellow = '#EFC94C';
 const orange = '#E3793F';
 const red = '#DF494A';
+const green = '#43c43f';
 
 export {
     black,
@@ -13,5 +14,6 @@ export {
     blueDark,
     yellow,
     orange,
-    red
+    red,
+    green
 };

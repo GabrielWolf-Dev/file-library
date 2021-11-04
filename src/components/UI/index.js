@@ -4,7 +4,9 @@ import {
     cianBlue,
     orange,
     white,
-    red
+    red,
+    yellow,
+    green
 } from './colors';
 
 /*-- Containers --*/
@@ -128,21 +130,42 @@ export const Label = styled.label`
 
 /*-- Messages --*/
 
-export const ErrorMsg = styled.div`
-    width: 100%;
-    max-width: 400px;
+export const Msg = styled.div`
     padding: 12px 2%;
     border-radius: 10px;
-    background-color: ${red};
-    color: ${white};
     font-size: 1rem;
     text-align: center;
+`;
+
+export const ErrorMsg = styled(Msg)`
+    background-color: ${red};
+    color: ${white};
     position: absolute;
     top: 160px;
     left: 50%;
     transform: translateX(-50%);
 
     @media (min-width: 768px) { top: 180px; }
+`;
+
+export const WarningMsg = styled(Msg)`
+    background-color: ${yellow};
+    color: ${black};
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -80%);
+    z-index: 3;
+`;
+
+export const SuccessMsg = styled(Msg)`
+    background-color: ${green};
+    color: ${white};
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -80%);
+    z-index: 3;
 `;
 
 /*-- Fonts --*/
