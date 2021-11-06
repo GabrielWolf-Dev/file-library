@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, memo } from 'react';
 import { storage, db  } from '../../firebase';
 import { useAuth } from '../../hooks/useAuth';
 
@@ -7,6 +7,7 @@ import Add from '@material-ui/icons/Add';
 import Header from '../Header';
 import MenuAccount from './MenuAccount';
 import Filters from './Filters';
+import  ListFiles  from './ListFiles';
 
 import {
     TitleBigger,
@@ -25,9 +26,8 @@ import {
     ProgressUpload
 } from './style';
 import { white } from '../UI/colors';
-import ListFiles from './ListFiles';
 
-export default function Dashboard() {
+function DashboardComponent() {
     const [isGrid, setIsGrid] = useState(true);
     const [isOpenPopUp, setIsOpenPopUp] = useState(false);
     const { isAuth } = useAuth();
@@ -188,3 +188,5 @@ export default function Dashboard() {
         </>
     )
 }
+
+export const Dashboard = memo(DashboardComponent);

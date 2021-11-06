@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import { db } from '../../firebase';
 import { Player } from '@lottiefiles/react-lottie-player';
@@ -43,7 +43,11 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
 
     useEffect(() => {
         db.collection('lib').doc(isAuth.uid).collection('files')
-        .onSnapshot(snapshot => setFiles(snapshot.docs.map(value => value.data())));
+        .onSnapshot(snapshot => {
+            const listFiles = snapshot.docs.map(value => value.data());
+
+            setFiles(listFiles);
+        });
     }, [isAuth.uid]);
 
     function showImgFile(e){
@@ -78,11 +82,11 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
         setIsBgActive(bgStyle.showBg);
     }
 
-    const handleOptions = useCallback((e) => {
+    function handleOptions(e) {
         setShowOptions(!showOptions);
         
         e.target.nextElementSibling.style.display = showOptions ? 'block' : 'none';
-    }, [showOptions]);
+    }
     
     return(
         <>

@@ -8,7 +8,7 @@ import {
 import { useAuth } from './hooks/useAuth';
 
 import Home from './components/Home';
-import Dashboard from './components/Dashboard';
+import { Dashboard } from './components/Dashboard';
 import Login from './components/Login';
 import Register from './components/Register';
 import Error404 from './components/Error-404';
