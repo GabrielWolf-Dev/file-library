@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { ZoomOutMap } from '@material-ui/icons';
 
 import optionsIcon from '../../assets/img/options-icon.png';
+import zoomExpand from '../../assets/img/zoomExpand.png';
 import { SubContent } from '../UI';
 import {
     black,
@@ -266,10 +266,23 @@ export const ContainerDescItem = styled.div`
     padding: 0 4%;
 `;
 
-export const ButtonExpand = styled(ZoomOutMap)`
+export const ButtonExpand = styled.button`
+    width: 16px;
+    height: 16px;
+    background-color: transparent;
+    background-image: url(${zoomExpand});
+    background-repeat: no-repeat;
+    background-position: center;
     color: ${cianBlue};
     cursor: pointer;
-    margin: 0 8px;
+    display: inline-block;
+    margin-right: 16px;
+
+    @media (min-width: 768px) {
+        width: 24px;
+        height: 24px;
+        margin-right: 8px;
+    }
 `;
 
 export const ButtonConfig = styled.button`
@@ -282,6 +295,7 @@ export const ButtonConfig = styled.button`
     color: ${cianBlue};
     cursor: pointer;
     display: inline-block;
+    z-index: 2;
 
     @media (min-width: 768px) {
         width: 24px;
@@ -351,6 +365,11 @@ export const Options = styled.aside`
     top: 24px;
     right: 0;
     display: none;
+`;
+
+export const OptionsColumnLayout = styled(Options)`
+    top: -24px;
+    right: 42px;
 `;
 
 export const OptionsWrapper = styled.div`

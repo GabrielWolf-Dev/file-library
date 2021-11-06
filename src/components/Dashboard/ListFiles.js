@@ -27,6 +27,7 @@ import {
     Options,
     LineOptions,
     OptionsWrapper,
+    OptionsColumnLayout,
 } from './style';
 import { Button, Container, TitleBigger } from '../UI';
 import { cianBlue, red } from '../UI/colors';
@@ -129,7 +130,6 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
                                                         onClick={showImgFile}
                                                         style={{
                                                             display: isFileImg ? 'inline-block' : 'none',
-                                                            marginRight: '8px'
                                                         }}
                                                     />
 
@@ -165,7 +165,7 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
                                             files.map((file, index) => <tr key={index}>
                                                 <TdBody style={{ textAlign: 'left' }}>{file.name}</TdBody>
                                                 <TdBody>{file.size} MB</TdBody>
-                                                <TdBody style={{ textAlign: 'right' }}>
+                                                <TdBody style={{ textAlign: 'right', position: 'relative' }}>
                                                         <ButtonExpand
                                                             data-name={file.name}
                                                             data-img={file.url}
@@ -177,7 +177,23 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
                                                                 marginRight: '8px'
                                                             }}
                                                         />
-                                                    <ButtonConfig />
+
+                                                    <ButtonConfig onClick={handleOptions} />
+                                                    
+                                                        <OptionsColumnLayout>
+                                                            <OptionsWrapper>
+                                                                <CloudDownload style={{ color: cianBlue, marginRight: '8px' }} />
+                                                                <span>Baixar</span>
+                                                            </OptionsWrapper>
+
+                                                            <LineOptions />
+
+                                                            <OptionsWrapper>
+                                                                <Delete style={{ color: red }} />
+                                                                <span>Excluir</span>
+                                                            </OptionsWrapper>
+                                                        </OptionsColumnLayout>
+                                                    
                                                 </TdBody>
                                             </tr>)
                                         }
