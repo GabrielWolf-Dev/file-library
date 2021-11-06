@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import { db } from '../../firebase';
 import { Player } from '@lottiefiles/react-lottie-player';
 
+import { CloudDownload, Delete } from '@material-ui/icons';
 import pdfImg from '../../assets/img/pdfImg.png';
 import gifImg from '../../assets/img/gifImg.png';
 import fileImg from '../../assets/img/fileImg.png';
@@ -23,15 +24,21 @@ import {
     ButtonConfig,
     ContainerImg,
     BgPopUpFile,
+    Options,
+    LineOptions,
+    OptionsWrapper,
 } from './style';
 import { Button, Container, TitleBigger } from '../UI';
+import { cianBlue, red } from '../UI/colors';
 
 export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
     const { isAuth } = useAuth();
     const [files, setFiles] = useState([]);
     const [fileImgExpand, setFileImgExpand] = useState({});
     const [isImgSelected, setIsImgSelected] = useState(false);
+    const [showOptions, setShowOptions] = useState(true);
     const [isBgActive, setIsBgActive] = useState(bgStyle.hiddenBg);
+
 
     useEffect(() => {
         db.collection('lib').doc(isAuth.uid).collection('files')
@@ -69,6 +76,12 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
         setIsImgSelected(true);
         setIsBgActive(bgStyle.showBg);
     }
+
+    const handleOptions = useCallback((e) => {
+        setShowOptions(!showOptions);
+        
+        e.target.nextElementSibling.style.display = showOptions ? 'block' : 'none';
+    }, [showOptions]);
     
     return(
         <>
@@ -111,7 +124,7 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
                                             <ContainerDescItem>
                                                 <NameItemList>{file.name}</NameItemList>
 
-                                                <div>
+                                                <div style={{ position: 'relative' }}>
                                                     <ButtonExpand 
                                                         onClick={showImgFile}
                                                         style={{
@@ -119,7 +132,21 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
                                                             marginRight: '8px'
                                                         }}
                                                     />
-                                                    <ButtonConfig />
+
+                                                    <ButtonConfig onClick={handleOptions} />
+                                                    <Options>
+                                                        <OptionsWrapper>
+                                                            <CloudDownload style={{ color: cianBlue, marginRight: '8px' }} />
+                                                            <span>Baixar</span>
+                                                        </OptionsWrapper>
+
+                                                        <LineOptions />
+
+                                                        <OptionsWrapper>
+                                                            <Delete style={{ color: red }} />
+                                                            <span>Excluir</span>
+                                                        </OptionsWrapper>
+                                                    </Options>
                                                 </div>
                                             </ContainerDescItem>
                                     </ItemList>

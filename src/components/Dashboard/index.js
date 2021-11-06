@@ -88,7 +88,7 @@ export default function Dashboard() {
             const maxMBValue = 200;
 
             if(convertToMB <= maxMBValue)
-                uploadTask.on('state_changed',(snapshot)=>{
+                uploadTask.on('state_changed',(snapshot) => {
                     const progressTemp = (snapshot.bytesTransferred / snapshot.totalBytes) * 1;
                     setProgress(progressTemp);
                     setIsProgress(true);

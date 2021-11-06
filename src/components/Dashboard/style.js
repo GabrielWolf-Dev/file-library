@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import { ZoomOutMap, MoreVert } from '@material-ui/icons';
+import { ZoomOutMap } from '@material-ui/icons';
 
+import optionsIcon from '../../assets/img/options-icon.png';
 import { SubContent } from '../UI';
 import {
     black,
@@ -271,9 +272,21 @@ export const ButtonExpand = styled(ZoomOutMap)`
     margin: 0 8px;
 `;
 
-export const ButtonConfig = styled(MoreVert)`
+export const ButtonConfig = styled.button`
+    width: 16px;
+    height: 16px;
+    background-color: transparent;
+    background-image: url(${optionsIcon});
+    background-repeat: no-repeat;
+    background-position: center;
     color: ${cianBlue};
     cursor: pointer;
+    display: inline-block;
+
+    @media (min-width: 768px) {
+        width: 24px;
+        height: 24px;
+    }
 `;
 
 export const NameItemList = styled(SubContent)`
@@ -326,4 +339,30 @@ export const ContainerImg = styled.aside`
     
     @media (min-width: 768px) { max-width: 750px; }
     @media (min-width: 1280px) { max-width: 1000px; }
+`;
+
+export const Options = styled.aside`
+    width: 100px;
+    padding: 8px 2%;
+    background-color: ${black};
+    color: ${white};
+    border-radius: 10px;
+    position: absolute;
+    top: 24px;
+    right: 0;
+    display: none;
+`;
+
+export const OptionsWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+`;
+
+export const LineOptions = styled.hr`
+    width: 100%;
+    height: 2px;
+    margin: 4px 0;
+    background-color: ${white};
 `;
