@@ -22,7 +22,7 @@ export default function MenuAccount(){
     return(
         <NavAccount>
                 <figure style={{ height: '100%' }}>
-                    <ImgAccount src={isAuth.img} alt={`Foto de ${isAuth.name}`} />
+                    <ImgAccount src={isAuth.img} alt={`Foto de ${isAuth.name === null ? 'usuário' : isAuth.name}`} />
 
                     <FigCaptionImg>{isAuth.name}</FigCaptionImg>
                 </figure>

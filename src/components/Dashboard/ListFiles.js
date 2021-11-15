@@ -42,12 +42,17 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
 
 
     useEffect(() => {
+        let isUnmounted = false;
+
         db.collection('lib').doc(isAuth.uid).collection('files')
         .onSnapshot(snapshot => {
+            if(isUnmounted) return;
+            
             const listFiles = snapshot.docs.map(value => value.data());
-
             setFiles(listFiles);
         });
+
+        () => isUnmounted = true;
     }, [isAuth.uid]);
 
     function showImgFile(e){
@@ -86,6 +91,26 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
         setShowOptions(!showOptions);
         
         e.target.nextElementSibling.style.display = showOptions ? 'block' : 'none';
+    }
+
+    function downloadFile(e){
+        const img = e.target.closest('#itemList').children[0];
+        const imgUrl = img.dataset.img;
+        const nameImg = img.dataset.name;
+
+        const xhr = new XMLHttpRequest();
+        xhr.responseType = 'blob';
+        xhr.onload = () => {
+          const blob = xhr.response;
+        
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = nameImg;
+            a.click();
+            a.remove();
+        };
+        xhr.open('GET', imgUrl);
+        xhr.send();
     }
     
     return(
@@ -139,7 +164,7 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
 
                                                     <ButtonConfig onClick={handleOptions} />
                                                     <Options>
-                                                        <OptionsWrapper>
+                                                        <OptionsWrapper onClick={downloadFile}>
                                                             <CloudDownload style={{ color: cianBlue, marginRight: '8px' }} />
                                                             <span>Baixar</span>
                                                         </OptionsWrapper>

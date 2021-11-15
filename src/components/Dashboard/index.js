@@ -5,7 +5,7 @@ import { useAuth } from '../../hooks/useAuth';
 import Add from '@material-ui/icons/Add';
 
 import Header from '../Header';
-import MenuAccount from './MenuAccount';
+
 import Filters from './Filters';
 import  ListFiles  from './ListFiles';
 
@@ -154,13 +154,14 @@ function DashboardComponent() {
             <Header />
             <TitleBigger style={{ marginTop: '48px' }}>Dashboard</TitleBigger>
 
-            <MenuAccount />
+            
             <Filters isGrid={isGrid} setIsGrid={setIsGrid} />
             <ListFiles
                 handlePopUp={handlePopUp}
                 isGrid={isGrid}
                 layoutFile={layoutFile}
                 bgStyle={bgStyle}
+                isFileSelected={isFileSelected}
             />
 
             <BtnAddFile onClick={handlePopUp}>
