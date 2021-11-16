@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../hooks/useAuth';
-import { db } from '../../firebase';
+import { db, storage } from '../../firebase';
 import { Player } from '@lottiefiles/react-lottie-player';
 
 import { CloudDownload, Delete } from '@material-ui/icons';
@@ -28,8 +28,14 @@ import {
     LineOptions,
     OptionsWrapper,
     OptionsColumnLayout,
+    DowloadingAnimBox
 } from './style';
-import { Button, Container, TitleBigger } from '../UI';
+import {
+    Button,
+    Container,
+    SubContent,
+    TitleBigger
+} from '../UI';
 import { cianBlue, red } from '../UI/colors';
 
 export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
@@ -38,6 +44,7 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
     const [fileImgExpand, setFileImgExpand] = useState({});
     const [isImgSelected, setIsImgSelected] = useState(false);
     const [showOptions, setShowOptions] = useState(true);
+    const [isDownloaded, setIsDownloaded] = useState(false);
     const [isBgActive, setIsBgActive] = useState(bgStyle.hiddenBg);
 
 
@@ -48,7 +55,12 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
         .onSnapshot(snapshot => {
             if(isUnmounted) return;
             
-            const listFiles = snapshot.docs.map(value => value.data());
+            const listFiles = snapshot.docs.map(value => {
+                return {
+                    ...value.data(),
+                    id: value.id
+                };
+            });
             setFiles(listFiles);
         });
 
@@ -58,7 +70,7 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
     function showImgFile(e){
         const list = e.target.closest('#itemList');
         const listImgName = list.firstChild.dataset.name;
-        const listImgLink = list.firstChild.dataset.img;
+        const listImgLink = list.firstChild.dataset.url;
 
         setFileImgExpand({
             name: listImgName,
@@ -76,7 +88,7 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
     }
 
     function showImgColumnGrid(e){
-        const listImgLink = e.target.dataset.img;
+        const listImgLink = e.target.dataset.url;
         const listImgName = e.target.dataset.name;
 
         setFileImgExpand({
@@ -94,9 +106,9 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
     }
 
     function downloadFile(e){
-        const img = e.target.closest('#itemList').children[0];
-        const imgUrl = img.dataset.img;
-        const nameImg = img.dataset.name;
+        const file = e.target.closest('#itemList').children[0];
+        const fileUrl = file.dataset.url;
+        const nameFile = file.dataset.name;
 
         const xhr = new XMLHttpRequest();
         xhr.responseType = 'blob';
@@ -105,12 +117,41 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
         
             const a = document.createElement("a");
             a.href = URL.createObjectURL(blob);
-            a.download = nameImg;
+            a.download = nameFile;
             a.click();
             a.remove();
         };
-        xhr.open('GET', imgUrl);
+
+        xhr.onprogress = () => setIsDownloaded(true);
+        xhr.onloadend = () => setIsDownloaded(false);
+        xhr.open('GET', fileUrl);
         xhr.send();
+    }
+
+    function deleteFile(e){
+        const itemList = e.target.closest('#itemList');
+        const idFile = itemList.dataset.id;
+        const urlFile = itemList.dataset.url;
+        
+        // Firestore
+        db.collection(`lib/${isAuth.uid}/files`).doc(idFile).delete()
+        .then(() => {
+            alert("Document successfully deleted!");
+        })
+        .catch((error) => {
+            console.error("Error removing document: ", error);
+        });
+
+        // Storage
+        const refStorage = storage.refFromURL(urlFile);
+
+        refStorage.delete()
+        .then(() => {
+            alert("Exluido no storage!");
+        })
+        .catch((error) => {
+            console.error("Error removing file storage: ", error);
+        });
     }
     
     return(
@@ -119,6 +160,15 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
                 ...isBgActive,
                 zIndex: '3'
             }} />
+            <DowloadingAnimBox style={{ display: isDownloaded ? 'block' : 'none'}}>
+                <Player
+                    loop
+                    autoplay
+                    style={{ width: '50%', height: '50%' }}
+                    src="https://assets9.lottiefiles.com/temp/lf20_3tPLQ7.json"
+                />
+                <SubContent>Fazendo Download...</SubContent>
+            </DowloadingAnimBox>
             <ContainerImg style={{ display: isImgSelected ? 'block' : 'none' }}>
                 <img
                     style={{ width: '100%', height: '100%' }}
@@ -133,9 +183,14 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
                             isGrid ? 
                             files.map((file, index) => {
                                 const isFileImg = file.type == 'image/png' || file.type == 'image/jpeg' || file.type == 'image/svg+xml';
-
+                                
                                 return (
-                                    <ItemList key={index} id="itemList">
+                                    <ItemList
+                                        key={index}
+                                        id="itemList"
+                                        data-id={file.id}
+                                        data-url={file.url}
+                                    >
                                             <ImgList
                                                 style={{
                                                     backgroundImage: `url(${
@@ -147,8 +202,8 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
                                                         : fileImg
                                                     })`
                                                 }}
-                                                data-img={isFileImg ? file.url : undefined}
-                                                data-name={isFileImg ? file.name : undefined}
+                                                data-url={file.url}
+                                                data-name={file.name}
                                             ></ImgList>
 
                                             <ContainerDescItem>
@@ -171,7 +226,7 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
 
                                                         <LineOptions />
 
-                                                        <OptionsWrapper>
+                                                        <OptionsWrapper onClick={deleteFile}>
                                                             <Delete style={{ color: red }} />
                                                             <span>Excluir</span>
                                                         </OptionsWrapper>

@@ -385,3 +385,29 @@ export const LineOptions = styled.hr`
     margin: 4px 0;
     background-color: ${white};
 `;
+
+export const DowloadingAnimBox = styled.div`
+    width: 100%;
+    max-width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    background-color: ${black};
+    position: absolute;
+    bottom: 6%;
+    left: 2%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: ${white};
+
+    @media (min-width: 368px) {
+        max-width: 120px;
+        height: 120px;
+    }
+
+    @media (min-width: 768px) {
+        max-width: 200px;
+        height: 200px;
+    }
+`;
