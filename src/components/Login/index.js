@@ -4,7 +4,7 @@ import { filterXSS } from 'xss';
 import { auth } from '../../firebase';
 import { useAuth } from '../../hooks/useAuth';
 import { useMsgError } from '../../hooks/useMsgError';
-import { ErroMsgProv } from '../../context/errorMsg';
+import { ErrorMsgProv } from '../../context/errorMsg';
 
 import Header from '../Header';
 import Footer from '../Footer';
@@ -74,7 +74,7 @@ export default function Login() {
         Object.keys(isAuth).length !== 0 ? (
             <Redirect to={{ pathname: '/dashboard'}} />
             ) : (
-                <ErroMsgProv>
+                <ErrorMsgProv>
                     {isError ? (<ErrorMsg>{msgError}</ErrorMsg>) : false}
                     <Header />
                     <TitleBigger style={{ marginTop: '48px' }}>Login</TitleBigger>
@@ -126,7 +126,7 @@ export default function Login() {
                         </BoxPlayerAnimation>
                     </ContainerItemsRes>
                     <Footer />
-                </ErroMsgProv>
+                </ErrorMsgProv>
             )
     )
 }

@@ -4,8 +4,8 @@ import { Player } from '@lottiefiles/react-lottie-player';
 import { useAuth } from '../../hooks/useAuth';
 import { Redirect } from 'react-router-dom';
 import { auth } from '../../firebase';
+import { ErrorMsgProv } from '../../context/errorMsg';
 import { useMsgError } from '../../hooks/useMsgError';
-import { ErroMsgProv } from '../../context/errorMsg';
 
 import Header from '../Header';
 import Footer from '../Footer';
@@ -44,8 +44,9 @@ export default function Register() {
 
         if(validationForm(email, pass) && isEmptyInputs){
             alert('ok');
-            createAccount(email, pass, form);
+
             setIsError(false);
+            createAccount(email, pass, form);
         } else {
             setIsAuth({});
             setIsError(true);
@@ -85,7 +86,7 @@ export default function Register() {
         Object.keys(isAuth).length !== 0 ? (
             <Redirect to={{ pathname: '/dashboard'}} />
         ) : (
-            <ErroMsgProv>
+            <ErrorMsgProv>
             {isError ? (<ErrorMsg>{msgError}</ErrorMsg>) : false}
                 <Header />
                 <TitleBigger style={{ marginTop: '48px' }}>Registrar-se</TitleBigger>
@@ -140,7 +141,7 @@ export default function Register() {
                     </BoxPlayerAnimation>
                 </ContainerItemsRes>
                 <Footer />
-            </ErroMsgProv>
+            </ErrorMsgProv>
         )
     )
 }

@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect } from 'react';
 
 export const ErrorMsgContext = createContext({});
 
-export const ErroMsgProv = (props) => {
+export const ErrorMsgProv = (props) => {
     const [isError, setIsError] = useState(false);
     const [msgError, setMsgError] = useState("");
     const pathName = document.location.pathname;

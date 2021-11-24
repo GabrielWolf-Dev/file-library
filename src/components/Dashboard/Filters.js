@@ -1,4 +1,5 @@
 import React from 'react';
+import { useFile } from '../../hooks/useFile';
 
 import Search from '@material-ui/icons/Search';
 import ViewList from '@material-ui/icons/ViewList';
@@ -15,6 +16,14 @@ import {
 import { Input } from '../UI';
 
 export default function Filters({ isGrid, setIsGrid }){
+    const { setFilterFile } = useFile();
+
+    function filterFiles(e){
+        const filterValue = e.target.value;
+
+        setFilterFile(filterValue);
+    }
+
     return(
         <FilterContainerFlex>
                 <BoxInputSearch>
@@ -30,13 +39,17 @@ export default function Filters({ isGrid, setIsGrid }){
                 </BoxInputSearch>
 
                 <BoxFilter>
-                    <SelectFilter name="filter_files">
+                    <SelectFilter  
+                        onClick={filterFiles}
+                        name="filter_files"
+                    >
                         <option value="all">Todos</option>
                         <option value="photos">Fotos</option>
                         <option value="gifs">Gifs</option>
                         <option value="videos">Vídeos</option>
-                        <option value="sound">Áudios</option>
+                        <option value="audios">Áudios</option>
                         <option value="documents">Documentos</option>
+                        <option value="others">Outros</option>
                     </SelectFilter>
 
                     {

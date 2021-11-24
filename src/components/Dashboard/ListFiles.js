@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../../hooks/useAuth';
+import { useFile } from '../../hooks/useFile';
 import { db, storage } from '../../firebase';
 import { Player } from '@lottiefiles/react-lottie-player';
 
@@ -40,32 +41,12 @@ import { cianBlue, red } from '../UI/colors';
 
 export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
     const { isAuth } = useAuth();
-    const [files, setFiles] = useState([]);
+    const { files } = useFile();
     const [fileImgExpand, setFileImgExpand] = useState({});
     const [isImgSelected, setIsImgSelected] = useState(false);
     const [showOptions, setShowOptions] = useState(true);
     const [isDownloaded, setIsDownloaded] = useState(false);
     const [isBgActive, setIsBgActive] = useState(bgStyle.hiddenBg);
-
-
-    useEffect(() => {
-        let isUnmounted = false;
-
-        db.collection('lib').doc(isAuth.uid).collection('files')
-        .onSnapshot(snapshot => {
-            if(isUnmounted) return;
-            
-            const listFiles = snapshot.docs.map(value => {
-                return {
-                    ...value.data(),
-                    id: value.id
-                };
-            });
-            setFiles(listFiles);
-        });
-
-        () => isUnmounted = true;
-    }, [isAuth.uid]);
 
     function showImgFile(e){
         const list = e.target.closest('#itemList');
@@ -152,6 +133,8 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
         .catch((error) => {
             console.error("Error removing file storage: ", error);
         });
+
+        setShowOptions(false);
     }
     
     return(
@@ -182,7 +165,9 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
                         {
                             isGrid ? 
                             files.map((file, index) => {
-                                const isFileImg = file.type == 'image/png' || file.type == 'image/jpeg' || file.type == 'image/svg+xml';
+                                const isFileImg = file.type === 'image/png' 
+                                || file.type === 'image/jpeg' 
+                                || file.type === 'image/svg+xml';
                                 
                                 return (
                                     <ItemList
@@ -195,10 +180,10 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
                                                 style={{
                                                     backgroundImage: `url(${
                                                         isFileImg ? file.url 
-                                                        : file.type == 'application/pdf' ? pdfImg
-                                                        : file.type == 'image/gif' ? gifImg 
-                                                        : file.type == 'audio/mpeg' ? micImg 
-                                                        : file.type == 'video/x-matroska' || file.type == 'video/mp4' ? movieImg
+                                                        : file.type === 'application/pdf' ? pdfImg
+                                                        : file.type === 'image/gif' ? gifImg 
+                                                        : file.type === 'audio/mpeg' ? micImg 
+                                                        : file.type === 'video/x-matroska' || file.type === 'video/mp4' ? movieImg
                                                         : fileImg
                                                     })`
                                                 }}
@@ -217,7 +202,7 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
                                                         }}
                                                     />
 
-                                                    <ButtonConfig onClick={handleOptions} />
+                                                    <ButtonConfig onClick={handleOptions}/>
                                                     <Options>
                                                         <OptionsWrapper onClick={downloadFile}>
                                                             <CloudDownload style={{ color: cianBlue, marginRight: '8px' }} />
@@ -252,10 +237,10 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
                                                 <TdBody style={{ textAlign: 'right', position: 'relative' }}>
                                                         <ButtonExpand
                                                             data-name={file.name}
-                                                            data-img={file.url}
+                                                            data-url={file.url}
                                                             onClick={showImgColumnGrid}
                                                             style={{
-                                                                display: file.type == 'image/png' || file.type == 'image/jpeg' || file.type == 'image/svg+xml'
+                                                                display: file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'image/svg+xml'
                                                                 ? 'inline-block'
                                                                 : 'none',
                                                                 marginRight: '8px'
@@ -264,15 +249,22 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
 
                                                     <ButtonConfig onClick={handleOptions} />
                                                     
-                                                        <OptionsColumnLayout>
-                                                            <OptionsWrapper>
+                                                        <OptionsColumnLayout
+                                                            id="itemList" 
+                                                            data-id={file.id}
+                                                        >
+                                                            <OptionsWrapper
+                                                                data-url={file.url}
+                                                                data-name={file.name}
+                                                                onClick={downloadFile}
+                                                            >
                                                                 <CloudDownload style={{ color: cianBlue, marginRight: '8px' }} />
                                                                 <span>Baixar</span>
                                                             </OptionsWrapper>
 
                                                             <LineOptions />
 
-                                                            <OptionsWrapper>
+                                                            <OptionsWrapper onClick={deleteFile}>
                                                                 <Delete style={{ color: red }} />
                                                                 <span>Excluir</span>
                                                             </OptionsWrapper>

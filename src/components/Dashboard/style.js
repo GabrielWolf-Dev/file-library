@@ -118,9 +118,12 @@ export const ButtonIcon = styled.button`
 
 export const SelectFilter = styled.select`
     border: 0;
+    border-radius: 10px;
     font-size: 1rem;
-    padding: 8px 0;
+    padding: 8px 2%;
     cursor: pointer;
+    background-color: ${cianBlue};
+    color: ${black};
 `;
 
 export const ImgIcon = styled.img`

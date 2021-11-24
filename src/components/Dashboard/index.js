@@ -3,11 +3,12 @@ import { storage, db  } from '../../firebase';
 import { useAuth } from '../../hooks/useAuth';
 
 import Add from '@material-ui/icons/Add';
+import { FilesDbProv } from '../../context/filesDb';
 
 import Header from '../Header';
-
 import Filters from './Filters';
 import  ListFiles  from './ListFiles';
+import MenuAccount from './MenuAccount';
 
 import {
     TitleBigger,
@@ -101,9 +102,9 @@ function DashboardComponent() {
                             name: file.name,
                             url: url,
                             type: file.type,
-                            size: convertToMB
+                            size: convertToMB,
+                            extFile: verifyExtFile(file.name.split('.')[1])
                         });
-                    
                         setProgress(0);
                         setIsProgress(false);
                         successMsg();
@@ -114,6 +115,20 @@ function DashboardComponent() {
         } else {
             alert('Insira um arquivo para fazer o upload');
         }
+    }
+
+    function verifyExtFile(extFile){
+        return extFile === "jpeg" || extFile === "png" || extFile === "jpg"
+        ? "photos"
+        : extFile === "gif"
+        ? "gifs"
+        : extFile === "mp4" || extFile === "mkv" || extFile === "mov"
+        ? "videos"
+        : extFile === "mp3" || extFile === "aac" || extFile === "flac"
+        ? "audios"
+        : extFile === "docx" || extFile === "txt" || extFile === "pdf" || extFile === "pptx" || extFile === "doc"
+        ? "documents"
+        : "others";
     }
 
     function warningMsg(){
@@ -146,7 +161,7 @@ function DashboardComponent() {
     }, [isOpenPopUp]);
 
     return (
-        <>
+        <FilesDbProv>
             <BgPopUpFile onClick={handlePopUp} style={bgPopUp} />
             { showMsgWarning ? <WarningMsg>Tamanho máximo de 200 MB</WarningMsg> : false }
             { showMsgSuccess ? <SuccessMsg>Upload realizado com sucesso!</SuccessMsg> : false }
@@ -154,7 +169,7 @@ function DashboardComponent() {
             <Header />
             <TitleBigger style={{ marginTop: '48px' }}>Dashboard</TitleBigger>
 
-            
+            <MenuAccount />
             <Filters isGrid={isGrid} setIsGrid={setIsGrid} />
             <ListFiles
                 handlePopUp={handlePopUp}
@@ -186,7 +201,7 @@ function DashboardComponent() {
                     <ProgressUpload id="fileUpload" value={progress} max="1"> {progress}% </ProgressUpload>
                 </aside>
             </PopUpFileAdd>
-        </>
+        </FilesDbProv>
     )
 }
 

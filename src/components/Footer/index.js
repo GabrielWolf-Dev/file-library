@@ -8,7 +8,7 @@ export default function Footer() {
     const [footerSectionStyle, setFooterSectionStyle] = useState({});
     const widthWindow = window.innerWidth;
     const pathName = document.location.pathname;
-    const isDesktopPageRegLog = widthWindow >= 768 && (pathName == '/register' || pathName == '/login');
+    const isDesktopPageRegLog = widthWindow >= 768 && (pathName === '/register' || pathName === '/login');
 
     useEffect(() => 
         isDesktopPageRegLog
@@ -19,7 +19,7 @@ export default function Footer() {
     : setFooterSectionStyle({
         position: 'initial',
         bottom: '0'
-    }), [pathName]);
+    }), [pathName, isDesktopPageRegLog]);
     return (
         <FooterSection style={{
             position: footerSectionStyle.position,
