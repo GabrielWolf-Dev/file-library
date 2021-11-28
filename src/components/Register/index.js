@@ -4,7 +4,6 @@ import { Player } from '@lottiefiles/react-lottie-player';
 import { useAuth } from '../../hooks/useAuth';
 import { Redirect } from 'react-router-dom';
 import { auth } from '../../firebase';
-import { ErrorMsgProv } from '../../context/errorMsg';
 import { useMsgError } from '../../hooks/useMsgError';
 
 import Header from '../Header';
@@ -86,7 +85,7 @@ export default function Register() {
         Object.keys(isAuth).length !== 0 ? (
             <Redirect to={{ pathname: '/dashboard'}} />
         ) : (
-            <ErrorMsgProv>
+            <>
             {isError ? (<ErrorMsg>{msgError}</ErrorMsg>) : false}
                 <Header />
                 <TitleBigger style={{ marginTop: '48px' }}>Registrar-se</TitleBigger>
@@ -141,7 +140,7 @@ export default function Register() {
                     </BoxPlayerAnimation>
                 </ContainerItemsRes>
                 <Footer />
-            </ErrorMsgProv>
+            </>
         )
     )
 }
