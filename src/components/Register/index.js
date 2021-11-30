@@ -42,7 +42,7 @@ export default function Register() {
         const isEmptyInputs = email !== '' || pass !== '';
 
         if(validationForm(email, pass) && isEmptyInputs){
-            alert('ok');
+            alert('Conta criada com sucesso!');
 
             setIsError(false);
             createAccount(email, pass, form);

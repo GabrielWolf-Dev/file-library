@@ -29,7 +29,8 @@ import {
     LineOptions,
     OptionsWrapper,
     OptionsColumnLayout,
-    DowloadingAnimBox
+    DowloadingAnimBox,
+    SuccessMsgAction
 } from './style';
 import {
     Button,
@@ -47,6 +48,7 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
     const [showOptions, setShowOptions] = useState(true);
     const [isDownloaded, setIsDownloaded] = useState(false);
     const [isBgActive, setIsBgActive] = useState(bgStyle.hiddenBg);
+    const [isDeleted, setIsDeleted] = useState(false);
 
     function showImgFile(e){
         const list = e.target.closest('#itemList');
@@ -117,7 +119,9 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
         // Firestore
         db.collection(`lib/${isAuth.uid}/files`).doc(idFile).delete()
         .then(() => {
-            alert("Document successfully deleted!");
+            setIsDeleted(true);
+
+            setTimeout(() => setIsDeleted(false), 1500);
         })
         .catch((error) => {
             console.error("Error removing document: ", error);
@@ -127,9 +131,7 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
         const refStorage = storage.refFromURL(urlFile);
 
         refStorage.delete()
-        .then(() => {
-            alert("Exluido no storage!");
-        })
+        .then(() => console.log("Exluido no storage!"))
         .catch((error) => {
             console.error("Error removing file storage: ", error);
         });
@@ -159,6 +161,11 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
                     alt={fileImgExpand.name}
                 />
             </ContainerImg>
+            <SuccessMsgAction
+                style={{ display: isDeleted ? 'block' : 'none' }}
+            >
+                O arquivo foi deletado com sucesso!
+            </SuccessMsgAction>
             {
                 files.length !== 0 ? (
                     <List style={layoutFile}>

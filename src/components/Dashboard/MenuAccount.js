@@ -10,12 +10,10 @@ export default function MenuAccount(){
     const { isAuth, setIsAuth } = useAuth();
 
     function logout(){
-        auth.signOut().then(() => {
-            alert('Você se deslogou!');
-            setIsAuth({});
-          }).catch((error) => {
+        auth.signOut().then(() => setIsAuth({}))
+        .catch((error) => {
             console.log(error.message);
-            alert('Erro ao deslogar-se');
+            alert('Ocorreu algum erro ao deslogar-se');
           });
     }
 

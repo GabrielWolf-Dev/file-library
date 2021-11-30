@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import optionsIcon from '../../assets/img/options-icon.png';
 import zoomExpand from '../../assets/img/zoomExpand.png';
-import { SubContent } from '../UI';
+import { SubContent, SuccessMsg } from '../UI';
 import {
     black,
     cianBlue,
@@ -412,5 +412,19 @@ export const DowloadingAnimBox = styled.div`
     @media (min-width: 768px) {
         max-width: 200px;
         height: 200px;
+    }
+`;
+
+export const SuccessMsgAction = styled(SuccessMsg)`
+    width: 140px;
+    top: 10%;
+    left: 15%;
+    transform: translate(-15%, -10%);
+
+    @media (min-width: 768px) {
+        width: auto;
+        top: 24%;
+        left: 50%;
+        transform: translate(-50%, -24%);
     }
 `;

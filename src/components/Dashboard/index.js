@@ -99,7 +99,7 @@ function DashboardComponent() {
                     storage.ref(`lib/${isAuth.uid}/files/${file.name}`).getDownloadURL()
                     .then((url)=>{
                         db.collection('lib').doc(isAuth.uid).collection("files").add({
-                            name: file.name,
+                            name: file.name.split('.')[0],
                             url: url,
                             type: file.type,
                             size: convertToMB,
@@ -185,7 +185,10 @@ function DashboardComponent() {
 
             <PopUpFileAdd style={openPopUp}>
                 <SubTitle style={{ color: white }}>Upload do arquivo</SubTitle>
-                <LabelFileInput htmlFor="fileInput">Escolher arquivo</LabelFileInput>
+                <LabelFileInput
+                    htmlFor={isProgress ? "" : "fileInput"}
+                    style={{ cursor: isProgress ? 'not-allowed' : 'pointer' }}
+                >Escolher arquivo</LabelFileInput>
                 <input
                     onChange={fileSelect}
                     type="file"

@@ -16,12 +16,21 @@ import {
 import { Input } from '../UI';
 
 export default function Filters({ isGrid, setIsGrid }){
-    const { setFilterFile } = useFile();
+    const { setFilterFile, setFilterType } = useFile();
 
     function filterFiles(e){
         const filterValue = e.target.value;
 
+        setFilterType('select');
         setFilterFile(filterValue);
+    }
+
+    function searchInputFile(e) {
+        const valueSearch = e.target.value;
+        console.log(valueSearch)
+        
+        setFilterType('input');
+        setFilterFile(valueSearch);
     }
 
     return(
@@ -31,6 +40,7 @@ export default function Filters({ isGrid, setIsGrid }){
                         id="search"
                         type="text"
                         placeholder="Pesquisar"
+                        onChange={searchInputFile}
                     />
 
                     <LabelSearch htmlFor="search">
