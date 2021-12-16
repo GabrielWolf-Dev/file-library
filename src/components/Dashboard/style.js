@@ -432,7 +432,41 @@ export const SuccessMsgAction = styled(SuccessMsg)`
 export const ProfileContainer = styled.aside`
     width: 100%;
     height: 100vh;
-    background-color: ${black};
-    color: ${white};
-    z-index: 4;
+    padding: 0 2%;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    background-color: ${white};
+    z-index: 3;
+`;
+
+export const ImgUser = styled.img`
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+`;
+
+export const ContainerEmailGoogle = styled.div`
+    width: auto;
+    margin: 24px auto;
+    border-bottom: 1px solid ${orange};
+
+    @media (min-width: 300px) { width: 70%; }
+    @media (min-width: 468px) { width: 60%; }
+    @media (min-width: 568px) { width: 45%; }
+`;
+
+export const LabelEmail = styled.label`
+    font-size: 1.25rem;
+    color: ${orange};
+    display: inline-block;
+    margin-right: 8px;
+`;
+
+export const ImgProfile = styled.img`
+    width: 80%;
+    margin: 32px auto;
+    padding: 0 2%;
 `;
