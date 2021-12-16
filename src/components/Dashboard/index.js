@@ -27,6 +27,7 @@ import {
     ProgressUpload
 } from './style';
 import { white } from '../UI/colors';
+import Profile from './Profile';
 
 function DashboardComponent() {
     const [isGrid, setIsGrid] = useState(true);
@@ -167,8 +168,9 @@ function DashboardComponent() {
             { showMsgSuccess ? <SuccessMsg>Upload realizado com sucesso!</SuccessMsg> : false }
             
             <Header />
+            <Profile />
+            
             <TitleBigger style={{ marginTop: '48px' }}>Dashboard</TitleBigger>
-
             <MenuAccount />
             <Filters isGrid={isGrid} setIsGrid={setIsGrid} />
             <ListFiles

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import optionsIcon from '../../assets/img/options-icon.png';
 import zoomExpand from '../../assets/img/zoomExpand.png';
-import { SubContent, SuccessMsg } from '../UI';
+import { Container, SubContent, SuccessMsg } from '../UI';
 import {
     black,
     cianBlue,
@@ -427,4 +427,12 @@ export const SuccessMsgAction = styled(SuccessMsg)`
         left: 50%;
         transform: translate(-50%, -24%);
     }
+`;
+
+export const ProfileContainer = styled.aside`
+    width: 100%;
+    height: 100vh;
+    background-color: ${black};
+    color: ${white};
+    z-index: 4;
 `;
