@@ -39,6 +39,7 @@ function DashboardComponent() {
     const [isProgress, setIsProgress] = useState(false);
     const [showMsgSuccess, setShowMsgSuccess] = useState(false);
     const [showMsgWarning, setShowMsgWarning] = useState(false);
+    const [asideProfile, setAsideProfile] = useState(false);
 
     const layouts = {
         grid: {
@@ -155,6 +156,10 @@ function DashboardComponent() {
             setIsFileSelected("Nenhum arquivo foi selecionado");
     }
 
+    function showAsideProfile(){
+        setAsideProfile(!asideProfile);
+    }
+
     useEffect(() => isGrid ? setLayoutFile(layouts.grid) : setLayoutFile(layouts.column), [isGrid]);
     useEffect(() => {
         isOpenPopUp ? setOpenPopUp(layouts.openPopUp) : setOpenPopUp(layouts.notOpenPopUp);
@@ -168,10 +173,10 @@ function DashboardComponent() {
             { showMsgSuccess ? <SuccessMsg>Upload realizado com sucesso!</SuccessMsg> : false }
             
             <Header />
-            <Profile />
+            <Profile asideProfile={asideProfile} showAsideProfile={showAsideProfile} />
             
             <TitleBigger style={{ marginTop: '48px' }}>Dashboard</TitleBigger>
-            <MenuAccount />
+            <MenuAccount showAsideProfile={showAsideProfile} />
             <Filters isGrid={isGrid} setIsGrid={setIsGrid} />
             <ListFiles
                 handlePopUp={handlePopUp}

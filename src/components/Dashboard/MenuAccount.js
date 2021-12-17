@@ -4,9 +4,16 @@ import { useAuth } from '../../hooks/useAuth';
 
 import SettingsIcon from '@material-ui/icons/Settings';
 import Logout from '../../assets/svg/logout.svg';
-import { ButtonIcon, FigCaptionImg, ImgAccount, NavAccount } from './style';
+import imgProfile from '../../assets/svg/imgProfile.svg';
 
-export default function MenuAccount(){
+import {
+    ButtonIcon,
+    FigCaptionImg,
+    ImgAccount,
+    NavAccount
+} from './style';
+
+export default function MenuAccount({ showAsideProfile }){
     const { isAuth, setIsAuth } = useAuth();
 
     function logout(){
@@ -20,7 +27,7 @@ export default function MenuAccount(){
     return(
         <NavAccount>
                 <figure style={{ height: '100%' }}>
-                    <ImgAccount src={isAuth.img} alt={`Foto de ${isAuth.name === null ? 'usuário' : isAuth.name}`} />
+                    <ImgAccount src={isAuth.img === null ? imgProfile : isAuth.img} alt={`Foto de ${isAuth.name === null ? 'usuário' : isAuth.name}`} />
 
                     <FigCaptionImg>{isAuth.name}</FigCaptionImg>
                 </figure>
@@ -30,7 +37,7 @@ export default function MenuAccount(){
                         <img src={Logout} alt="Ícone de Deslogar" style={{width: '100%', height: '100%'}} />
                     </ButtonIcon>
 
-                    <ButtonIcon onClick={() => alert('Abrir menu de Perfil')}>
+                    <ButtonIcon onClick={showAsideProfile}>
                         <SettingsIcon style={{  width: '100%', height: '100%'}} />
                     </ButtonIcon>
                 </div>

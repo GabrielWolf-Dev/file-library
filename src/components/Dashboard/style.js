@@ -436,8 +436,16 @@ export const ProfileContainer = styled.aside`
     text-align: center;
     position: fixed;
     top: 0;
+    left: -100%;
     background-color: ${white};
     z-index: 3;
+    transition: .3s all ease-in-out;
+
+    @media (min-width: 768px) {
+        width: 100%;
+        max-width: 450px;
+        box-shadow: 2px 2px 10px black;
+    }
 `;
 
 export const ImgUser = styled.img`
@@ -454,8 +462,9 @@ export const ContainerEmailGoogle = styled.div`
     border-bottom: 1px solid ${orange};
 
     @media (min-width: 300px) { width: 70%; }
-    @media (min-width: 468px) { width: 60%; }
-    @media (min-width: 568px) { width: 45%; }
+    @media (min-width: 468px) { width: 50%; }
+    @media (min-width: 600px) { width: 40%; }
+    @media (min-width: 768px) { width: 80%; }
 `;
 
 export const LabelEmail = styled.label`
@@ -465,8 +474,34 @@ export const LabelEmail = styled.label`
     margin-right: 8px;
 `;
 
+export const HideAsideProfile = styled.button`
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    top: 2%;
+    right: 4%;
+    background-color: transparent;
+    cursor: pointer;
+`;
+
 export const ImgProfile = styled.img`
-    width: 80%;
+    width: 50%;
     margin: 32px auto;
     padding: 0 2%;
+
+    @media (min-width: 768px) { width: 80%; }
+`;
+
+export const LabelInputProfile = styled(LabelFileInput)`
+    width: 120px;
+    lineHeight: 42px;
+    backgroundColor: ${cianBlue};
+    cursor: pointer;
+    margin: 0;
+    margin-top: 8px;
+
+    @media (min-width: 768px) {
+        width: 160px;
+        margin-top: 0;
+    }
 `;
