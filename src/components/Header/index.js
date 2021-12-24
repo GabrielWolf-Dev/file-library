@@ -87,6 +87,12 @@ export default function Header() {
                                         to="/register"
                                     >Registrar-se</Link>
                                 </ListMenuDesktop>
+                                <ListMenuDesktop>
+                                    <Link
+                                        style={{ color: pathName === '/credits' ? cianBlue : white }}
+                                        to="/credits"
+                                    >Creditos</Link>
+                                </ListMenuDesktop>
                             </ul>
                         )
                     }
@@ -134,6 +140,12 @@ export default function Header() {
                                         style={{ color: pathName === '/register' ? cianBlue : white }}
                                         to="/register"
                                     >Registrar-se</Link>
+                                </ListMenuMobile>
+                                <ListMenuMobile>
+                                    <Link
+                                        style={{ color: pathName === '/credits' ? cianBlue : white }}
+                                        to="/credits"
+                                    >Creditos</Link>
                                 </ListMenuMobile>
                             </ul>
                         )
