@@ -291,7 +291,7 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
                         <Player
                             autoplay
                             loop
-                            style={{ width: '400px' }}
+                            style={{ width: '100%', maxWidth: '400px' }}
                             src="https://assets6.lottiefiles.com/datafiles/vhvOcuUkH41HdrL/data.json"
                         />
                         <Button

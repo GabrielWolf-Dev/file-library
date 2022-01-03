@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import optionsIcon from '../../assets/img/options-icon.png';
 import zoomExpand from '../../assets/img/zoomExpand.png';
-import { Container, SubContent, SuccessMsg } from '../UI';
+import { SubContent, SuccessMsg } from '../UI';
 import {
     black,
     cianBlue,
