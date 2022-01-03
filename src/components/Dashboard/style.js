@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Player } from '@lottiefiles/react-lottie-player';
 
 import optionsIcon from '../../assets/img/options-icon.png';
 import zoomExpand from '../../assets/img/zoomExpand.png';
@@ -504,4 +505,14 @@ export const LabelInputProfile = styled(LabelFileInput)`
         width: 160px;
         margin-top: 0;
     }
+`;
+
+export const PlayerEmptyFiles = styled(Player)`
+    width: 100%;
+    max-width: 200px;
+    padding: 0 2%;
+
+    @media (min-width: 320px) { max-width: 250px; }
+
+    @media (min-width: 768px) { max-width: 400px; }
 `;

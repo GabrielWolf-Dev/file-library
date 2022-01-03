@@ -30,7 +30,8 @@ import {
     OptionsWrapper,
     OptionsColumnLayout,
     DowloadingAnimBox,
-    SuccessMsgAction
+    SuccessMsgAction,
+    PlayerEmptyFiles
 } from './style';
 import {
     Button,
@@ -288,10 +289,9 @@ export default function ListFiles({ layoutFile, isGrid, handlePopUp, bgStyle }){
                 ) : (
                     <Container style={{ marginTop: '48px' }}>
                         <TitleBigger>Você não realizou upload dos seus arquivos :(</TitleBigger>
-                        <Player
+                        <PlayerEmptyFiles
                             autoplay
                             loop
-                            style={{ width: '100%', maxWidth: '400px' }}
                             src="https://assets6.lottiefiles.com/datafiles/vhvOcuUkH41HdrL/data.json"
                         />
                         <Button
