@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 import { filterXSS } from 'xss';
 import { useAuth } from '../../hooks/useAuth.js';
 import firebase from 'firebase/compat/app';
@@ -19,7 +19,8 @@ import {
     Form,
     Input,
     TitleBigger,
-    Button
+    Button,
+    ErrorMsg
 } from '../UI';
 import { cianBlue } from '../UI/colors.js';
 
@@ -29,8 +30,11 @@ import profile from '../../assets/svg/profile.svg';
 import imgProfile from '../../assets/svg/imgProfile.svg';
 
 export default function Profile({ asideProfile, showAsideProfile }){
-    const { isAuth } = useAuth();
-    const photoInput = useRef(null);
+    const { isAuth, setIsAuth } = useAuth();
+    const [error, setError] = useState({
+        isError: false,
+        msg: ""
+    });
     const user = firebase.auth().currentUser;
 
     function updateProfile(e){
@@ -44,66 +48,75 @@ export default function Profile({ asideProfile, showAsideProfile }){
         if(name !== ''){
             user.updateProfile({ displayName: name })
             .then(() => {
-                alert('Atualização realizada com sucesso!');
-                window.location.reload();
+                setIsAuth(oldData => { return { ...oldData, name: name } });
+                alert('Nome realizado com sucesso!');
             })
             .catch((error) => {
-                console.error(error.message);
+                console.error(error.name);
     
                 alert('Ocorreu algum erro!');
             });
-        }
+        } else { alert('O campo nome não pode estar vazio!') }
 
         if(name === '' || name !== '') {
             if(validationEmail(email)){
                 user.updateEmail(email)
                 .then(() => {
+                    setIsAuth(oldData => { return { ...oldData, email: email } });
                     alert('Email atualizado :)');
-                    window.location.reload();
                 })
                 .catch((error) => {
                     console.error(error.message);
-        
-                    alert('Ocorreu algum erro!');
+                    if(error.code === "auth/requires-recent-login"){
+                        alert('É necessário uma autenticação recente, por favor logue novamente na sua conta para que possa trocar o email.');
+                    } else {
+                        alert('Ocorreu algum erro!');
+                    }
                 });
-            }
+            } else { alert('Email inválido! Certo caracteres não são válidos...') }
         }
 
         form.reset();
     }
 
-    function updatePhoto(){
-        const photo = photoInput.current.files[0];
-        console.log(isAuth.img);
-        const uploadPhoto = storage.ref(`lib/${isAuth.uid}/photo/${photo.name}`).put(photo);
-        const oldPhotoRef = storage.refFromURL(isAuth.img);
+    function updatePhoto(e){
+        const photo = e.target.files[0];
 
-        // Delete the photo
-        oldPhotoRef.delete()
-        .then(function() { console.log('Foto antiga removida'); })
-        .catch(function(error) {
-            console.error(error);
-        });
+        if(photo !== undefined){
+            const uploadPhoto = storage.ref(`lib/${isAuth.uid}/photo/${photo.name}`).put(photo);
+            let oldPhotoRef;
 
-        // Upload Photo
-        uploadPhoto.on('state_changed',(snapshot) => {},
-        error => { throw new Error(error) },
-        () => {
-            storage.ref(`lib/${isAuth.uid}/photo/${photo.name}`).getDownloadURL()
-            .then((url)=>{
-                user.updateProfile({ photoURL: url })
-                .then(() => {
-                    alert('Sua foto de perfil foi atualizada!');
-                    window.location.reload();
-                })
-                .catch((error) => {
-                console.error(error.message);
-    
-                alert('Ocorreu algum erro!');
+            // Delete the photo
+            if(isAuth.img !== null){
+                oldPhotoRef = storage.refFromURL(isAuth.img);
+                oldPhotoRef.delete()
+                .then(function() { console.log('Foto antiga removida'); })
+                .catch(function(error) {
+                    console.error(error);
                 });
-            })
-            .catch(error => console.error(error));
-        });
+            }
+
+            // Upload Photo
+            uploadPhoto.on('state_changed',(snapshot) => {},
+            error => { throw new Error(error) },
+            () => {
+                storage.ref(`lib/${isAuth.uid}/photo/${photo.name}`).getDownloadURL()
+                .then((url)=>{
+                    user.updateProfile({ photoURL: url })
+                    .then(() => {
+                        setIsAuth(oldData => { return { ...oldData, img: url } })
+                        alert('Sua foto de perfil foi atualizada!');
+                    })
+                    .catch((error) => {
+                        console.error(error.message);
+                    
+                        alert('Ocorreu algum erro!');
+                    });
+                })
+                .catch(error => console.error(error));
+            });
+        }
+            
     }
 
     function validationEmail(email){
@@ -154,6 +167,7 @@ export default function Profile({ asideProfile, showAsideProfile }){
                 )
                 : (
                     <div>
+                        { error.isError ? <ErrorMsg>{error.msg}</ErrorMsg> : false }
                         <ImgUser
                             src={isAuth.img === null ? imgProfile : isAuth.img}
                             alt={isAuth.name}
@@ -181,7 +195,6 @@ export default function Profile({ asideProfile, showAsideProfile }){
                                 onChange={updatePhoto}
                                 type="file"
                                 id="photoInput"
-                                ref={photoInput}
                             />
                             
                         </Content>
