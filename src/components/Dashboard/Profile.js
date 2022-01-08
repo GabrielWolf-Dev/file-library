@@ -20,7 +20,8 @@ import {
     Input,
     TitleBigger,
     Button,
-    ErrorMsg
+    ErrorMsg,
+    SuccessMsg
 } from '../UI';
 import { cianBlue } from '../UI/colors.js';
 
@@ -33,6 +34,10 @@ export default function Profile({ asideProfile, showAsideProfile }){
     const { isAuth, setIsAuth } = useAuth();
     const [error, setError] = useState({
         isError: false,
+        msg: ""
+    });
+    const [success, setSuccess] = useState({
+        isSuccess: false,
         msg: ""
     });
     const user = firebase.auth().currentUser;
@@ -49,32 +54,95 @@ export default function Profile({ asideProfile, showAsideProfile }){
             user.updateProfile({ displayName: name })
             .then(() => {
                 setIsAuth(oldData => { return { ...oldData, name: name } });
-                alert('Nome realizado com sucesso!');
+
+                setSuccess({
+                    isSuccess: true,
+                    msg: "Nome atualizado com sucesso!"
+                });
+
+                setTimeout(() => {
+                    setSuccess({
+                        isSuccess: false,
+                        msg: ""
+                    });
+                }, 2500);
             })
             .catch((error) => {
                 console.error(error.name);
     
-                alert('Ocorreu algum erro!');
-            });
-        } else { alert('O campo nome não pode estar vazio!') }
+                setError({
+                    isError: true,
+                    msg: "Ocorreu algum erro!"
+                });
 
-        if(name === '' || name !== '') {
+                setTimeout(() => {
+                    setError({
+                        isError: false,
+                        msg: ""
+                    });
+                }, 3000);
+            });
+        }
+
+        if(name === '' || name !== '' && email !== '')
             if(validationEmail(email)){
                 user.updateEmail(email)
                 .then(() => {
                     setIsAuth(oldData => { return { ...oldData, email: email } });
-                    alert('Email atualizado :)');
+
+                    setSuccess({
+                        isSuccess: true,
+                        msg: "Email atualizado :)"
+                    });
+    
+                    setTimeout(() => {
+                        setSuccess({
+                            isSuccess: false,
+                            msg: ""
+                        });
+                    }, 2500);
                 })
                 .catch((error) => {
                     console.error(error.message);
                     if(error.code === "auth/requires-recent-login"){
-                        alert('É necessário uma autenticação recente, por favor logue novamente na sua conta para que possa trocar o email.');
+                        setError({
+                            isError: true,
+                            msg: "É necessário uma autenticação recente, logue na sua conta novamente para trocar o email."
+                        });
+
+                        setTimeout(() => {
+                            setError({
+                                isError: false,
+                                msg: ""
+                            });
+                        }, 3000);
                     } else {
-                        alert('Ocorreu algum erro!');
+                        setError({
+                            isError: true,
+                            msg: "Ocorreu um erro com a alteração do email"
+                        });
+
+                        setTimeout(() => {
+                            setError({
+                                isError: false,
+                                msg: ""
+                            });
+                        }, 2500);
                     }
                 });
-            } else { alert('Email inválido! Certo caracteres não são válidos...') }
-        }
+            } else {
+                setError({
+                    isError: true,
+                    msg: "Email inválido! Certo caracteres não são válidos..."
+                });
+
+                setTimeout(() => {
+                    setError({
+                        isError: false,
+                        msg: ""
+                    });
+                }, 2500);
+            }
 
         form.reset();
     }
@@ -105,12 +173,33 @@ export default function Profile({ asideProfile, showAsideProfile }){
                     user.updateProfile({ photoURL: url })
                     .then(() => {
                         setIsAuth(oldData => { return { ...oldData, img: url } })
-                        alert('Sua foto de perfil foi atualizada!');
+
+                        setSuccess({
+                            isSuccess: true,
+                            msg: "Sua foto de perfil foi atualizada!"
+                        });
+        
+                        setTimeout(() => {
+                            setSuccess({
+                                isSuccess: false,
+                                msg: ""
+                            });
+                        }, 2500);
                     })
                     .catch((error) => {
                         console.error(error.message);
                     
-                        alert('Ocorreu algum erro!');
+                        setError({
+                            isError: true,
+                            msg: "Ocorreu algum erro, tente novamente"
+                        });
+        
+                        setTimeout(() => {
+                            setError({
+                                isError: false,
+                                msg: ""
+                            });
+                        }, 2500);
                     });
                 })
                 .catch(error => console.error(error));
@@ -168,6 +257,12 @@ export default function Profile({ asideProfile, showAsideProfile }){
                 : (
                     <div>
                         { error.isError ? <ErrorMsg>{error.msg}</ErrorMsg> : false }
+                        {
+                            success.isSuccess ?
+                            <SuccessMsg style={{ top: '22%' }}>{success.msg}</SuccessMsg> 
+                            : false
+                        }
+
                         <ImgUser
                             src={isAuth.img === null ? imgProfile : isAuth.img}
                             alt={isAuth.name}
