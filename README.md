@@ -16,3 +16,7 @@ Neste projeto, aprendi muito sobre a ferramenta do Firebase e suas principais fu
 3. Configure o .env(Variáveis dos dados sigilosos do [Firebase](https://firebase.google.com/), eles são providos a partir do momento que você cria um projeto), você pode acessar vendo o script ["firebase.js"](https://github.com/GabrielWolf-Dev/file-library/blob/main/src/firebase.js) do projeto.
 4. Atualize pacotes(Opcional): ``` npm audit fix ```;
 5. Inicie o servidor React: ``` npm start ```.
+
+
+# A Documentação do projeto está em desenvolvimento...
+## Para mais detalhes, acesse [Projects -- Challenges FIle Library](https://github.com/GabrielWolf-Dev/file-library/projects/1)
