@@ -1,4 +1,4 @@
-![Desktop Version Dashboard Image](https://github.com/GabrielWolf-Dev/file-library/tree/main/src/assets/img/desktop-dash.png)
+![Desktop Version Dashboard Image](https://github.com/GabrielWolf-Dev/file-library/blob/main/src/assets/img/desktop-dash.png?raw=true)
 
 # [File Library](https://file-library-428bb.web.app/) 📁 ☁️
 File Library é um armazenador de arquivos como o Google Drive e Dropbox, destinado para desenvolver uma aplicação completa com Firebase e React Js.
@@ -10,7 +10,7 @@ Caso o usuário opte por fazer uma conta com email e senha, ele pode alterar o n
 ## O que eu aprendi: 📖
 Neste projeto, aprendi muito sobre a ferramenta do Firebase e suas principais funcionalidades como aplicação de regras de segurança, Firebase Hoisting, Cloud FireStore, Storage, Authentication e algumas validações no Front para que possa inserir os arquivos destinados no banco de dados do Firebase, como a validação do tipo de arquivo que é valido para o upload.
 
-![Desktop Version Dashboard Image](https://github.com/GabrielWolf-Dev/file-library/tree/main/src/assets/img/mobile-dash.png)
+![Desktop Version Dashboard Image](https://github.com/GabrielWolf-Dev/file-library/blob/main/src/assets/img/mobile-dash.png?raw=true)
 
 ## Configuração: ⚙️
 
@@ -51,4 +51,4 @@ Neste projeto, aprendi muito sobre a ferramenta do Firebase e suas principais fu
 ### Acesse a página de ["Projects"](https://github.com/GabrielWolf-Dev/file-library/projects/1) do projeto para saber, com mais detalhes, tudo o que está acontecendo com o projeto e os objetivos que foram concluídos ao longo do desenvolvimento.
 
 ## Demonstração do projeto:
-![Gif File Library](https://github.com/GabrielWolf-Dev/file-library/tree/main/src/assets/file-library.gif)
+![Gif File Library](https://github.com/GabrielWolf-Dev/file-library/blob/main/src/assets/file-library.gif?raw=true)
